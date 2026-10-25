@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katya Evstratyeva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #ffffff;
+      --off:     #fafaf9;
+      --ink:     #111111;
+      --mid:     #555555;
+      --light:   #999999;
+      --rule:    #e0e0e0;
+      --navy:    #1b3a6b;
+      --gold:    #9a7626;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    /* ── Utilities ───────────────────────────── */
+    .label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--navy); }
+
+    /* ── Nav ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 2rem;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1rem; font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+    }
+    .nav-links {
+      display: flex; gap: 2.2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--mid); transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--navy);
+      border-bottom: 1.5px solid var(--navy);
+      padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.65; color: var(--navy); }
+
+    /* ── Page wrapper ────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Hero ────────────────────────────────── */
+    .hero {
+      padding: 130px 0 80px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.4rem, 5vw, 3.5rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--ink);
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--navy);
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--mid);
+      max-width: 560px; line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1.5rem; align-items: center; }
+    .btn-primary {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--navy); color: #fff;
+      padding: 0.75rem 1.75rem;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #112548; color: #fff; }
+    .btn-ghost {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--mid);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-ghost:hover { color: var(--navy); border-color: var(--navy); }
+
+    /* ── Section ─────────────────────────────── */
+    section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+    .section-head { margin-bottom: 3rem; }
+
+    /* Two-col layout used for About + Expertise */
+    .two-col {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 3.5rem;
+    }
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; gap: 1.5rem 0; }
+      .nav-links { display: none; }
+    }
+
+    /* ── About ───────────────────────────────── */
+    .about-body p {
+      color: var(--mid); margin-bottom: 1rem; font-size: 0.97rem;
+    }
+    .stats {
+      margin-top: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .stat {
+      background: var(--white); padding: 1.25rem 1rem;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--navy); line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label { font-size: 0.7rem; color: var(--light); line-height: 1.4; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── Expertise ───────────────────────────── */
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 2.5rem;
+    }
+    .expertise-cell {
+      background: var(--white);
+      padding: 1.5rem;
+    }
+    .expertise-cell h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem; font-weight: 600;
+      margin-bottom: 0.5rem; color: var(--ink);
+    }
+    .expertise-cell p { font-size: 0.85rem; color: var(--mid); line-height: 1.6; }
+
+    .skills-line { font-size: 0.85rem; color: var(--mid); line-height: 2; }
+    .skills-line span { margin-right: 0.1rem; }
+    .skills-line span::after { content: ' ·'; color: var(--rule); margin-left: 0.1rem; }
+    .skills-line span:last-child::after { content: ''; }
+    .skill-navy { color: var(--navy); font-weight: 500; }
+
+    /* ── Experience ──────────────────────────── */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 3.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .exp-row:last-child { border-bottom: none; }
+    @media (max-width: 640px) {
+      .exp-row { grid-template-columns: 1fr; gap: 0.5rem 0; }
+    }
+    .exp-meta { padding-top: 2px; }
+    .exp-company {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 0.25rem;
+      letter-spacing: 0.02em;
+    }
+    .exp-dates {
+      font-size: 0.72rem; color: var(--light);
+      letter-spacing: 0.03em;
+    }
+    .exp-current {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.1rem 0.45rem;
+    }
+    .exp-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 0.6rem;
+    }
+    .exp-bullets {
+      list-style: none; padding: 0;
+      display: flex; flex-direction: column; gap: 0.35rem;
+    }
+    .exp-bullets li {
+      font-size: 0.875rem; color: var(--mid);
+      padding-left: 1rem; position: relative; line-height: 1.6;
+    }
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute; left: 0;
+      color: var(--rule); font-size: 0.75rem; top: 0.1rem;
+    }
+
+    /* ── Education ───────────────────────────── */
+    .edu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 2.5rem;
+    }
+    @media (max-width: 640px) { .edu-grid { grid-template-columns: 1fr; } }
+    .edu-cell {
+      background: var(--white);
+      padding: 1.5rem;
+    }
+    .edu-school {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 0.3rem;
+    }
+    .edu-degree { font-size: 0.78rem; color: var(--navy); font-weight: 500; margin-bottom: 0.2rem; }
+    .edu-meta { font-size: 0.72rem; color: var(--light); }
+
+    .extras { display: flex; flex-direction: column; gap: 1rem; padding-top: 0.5rem; }
+    .extra-item { display: flex; gap: 1rem; }
+    .extra-dash { color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .extra-item p { font-size: 0.875rem; color: var(--mid); line-height: 1.6; }
+    .extra-item strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Contact ─────────────────────────────── */
+    .contact-section { border-bottom: none; padding-bottom: 80px; }
+    .contact-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 700; color: var(--ink);
+      margin-bottom: 1rem; line-height: 1.25;
+    }
+    .contact-section h2 em { font-style: italic; color: var(--navy); }
+    .contact-sub { font-size: 0.97rem; color: var(--mid); max-width: 440px; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+    .contact-link {
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--navy);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .contact-link:hover { border-color: var(--navy); color: var(--navy); }
+    .contact-location { margin-top: 2rem; font-size: 0.78rem; color: var(--light); letter-spacing: 0.05em; }
+
+    /* ── Footer ──────────────────────────────── */
+    footer {
+      padding: 1.75rem 0;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.72rem; color: var(--light);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      border-top: 1px solid var(--rule);
+      flex-wrap: wrap; gap: 0.75rem;
+    }
+    footer a { color: var(--light); }
+    footer a:hover { color: var(--navy); }
+    .footer-links { display: flex; gap: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Katya Evstratyeva</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <div class="dot"></div>
+        <span class="label">Private Markets · UBS-ARC · New York</span>
+      </div>
+      <h1>Finance, strategy,<br />and <em>global operations</em><br />at the intersection.</h1>
+      <p class="hero-sub">
+        15+ years spanning equity research, investor relations, and co-founding a
+        hardware company. I bridge deep sector knowledge — EVs, clean energy,
+        semiconductors — with rigorous financial analysis and capital markets expertise.
+      </p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn-primary">View Experience</a>
+        <a href="katya-evstratyeva-resume.pdf" target="_blank" class="btn-ghost">Download Résumé</a>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <div class="two-col">
+        <div>
+          <span class="label">About</span>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num">15+</div>
+              <div class="stat-label">Years in Finance &amp; Capital Markets</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">18</div>
+              <div class="stat-label">Stocks Covered in Sustainability</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">$1.5M</div>
+              <div class="stat-label">Raised as Co-Founder</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">30+</div>
+              <div class="stat-label">Countries Visited</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-body">
+          <p>
+            I co-founded Photon-L, an international LED lighting manufacturer, raised $1.5M
+            from investors across China, Russia, and Singapore, and managed operations across
+            four continents. That hands-on entrepreneurial experience informs everything I do
+            in finance.
+          </p>
+          <p>
+            Today at UBS-ARC I work in private markets. Previously at Canaccord Genuity
+            I covered 18 sustainability stocks — EVs, battery technology, compound
+            semiconductors, renewables, and hydrogen — producing research that institutional
+            investors rely on to allocate capital.
+          </p>
+          <p>
+            I'm also an advisor at Amadeo Global, a guest lecturer at FIT, and passionate
+            about financial literacy for women, immigrants, and minorities.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Expertise -->
+    <section id="expertise">
+      <div class="two-col">
+        <div><span class="label">Expertise</span></div>
+        <div>
+          <div class="expertise-grid">
+            <div class="expertise-cell">
+              <h3>Equity Research</h3>
+              <p>Deep sector coverage in EVs, battery tech, renewables, hydrogen, and compound semiconductors.</p>
+            </div>
+            <div class="expertise-cell">
+              <h3>Investor Relations</h3>
+              <p>IPO strategy, earnings processes, investor targeting, roadshows, and Board-level communication.</p>
+            </div>
+            <div class="expertise-cell">
+              <h3>Global Operations</h3>
+              <p>Cross-border team management across China, Europe, Russia, and the US. Supply chain and OEM relationships.</p>
+            </div>
+            <div class="expertise-cell">
+              <h3>Financial Modeling</h3>
+              <p>Valuation, DCF, comparable company analysis, M&amp;A due diligence, and financial statement forecasting.</p>
+            </div>
+          </div>
+          <div class="skills-line">
+            <span class="skill-navy">Financial Reporting &amp; Modeling</span>
+            <span class="skill-navy">Valuation</span>
+            <span class="skill-navy">Due Diligence</span>
+            <span class="skill-navy">Mergers &amp; Acquisitions</span>
+            <span class="skill-navy">Corporate Finance</span>
+            <span class="skill-navy">Investor Relations</span>
+            <span class="skill-navy">Investor Targeting</span>
+            <span>Global Operations</span>
+            <span>Electric Vehicles</span>
+            <span>Battery Technology</span>
+            <span>Compound Semiconductors (SiC/GaN)</span>
+            <span>Renewables &amp; Hydrogen</span>
+            <span>LED Lighting</span>
+            <span>Power Electronics</span>
+            <span>Fundraising</span>
+            <span>Client Relationship Management</span>
+            <span>Research &amp; Competitive Analysis</span>
+            <span>Capital Markets</span>
+            <span>FINRA SIE</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <div class="two-col" style="margin-bottom: 2.5rem;">
+        <div><span class="label">Experience</span></div>
+        <div></div>
+      </div>
+      <div class="exp-list">
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">UBS-ARC</div>
+            <div class="exp-dates">May 2023 — Present</div>
+            <div class="exp-current">Current</div>
+          </div>
+          <div>
+            <div class="exp-title">Private Markets</div>
+            <ul class="exp-bullets">
+              <li>Focused on private markets within UBS Alternative Risk &amp; Capital (ARC), New York.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">Canaccord Genuity</div>
+            <div class="exp-dates">May 2019 — Apr 2023</div>
+          </div>
+          <div>
+            <div class="exp-title">Equity Research Associate</div>
+            <ul class="exp-bullets">
+              <li>Covered 18 stocks under Sustainability — EVs, batteries, renewables, hydrogen, SiC/GaN: TSLA, GNRC, PLUG, FCEL, SEDG, CREE, and others.</li>
+              <li>Forecast financial statements and authored research notes outlining investment thesis for institutional clients.</li>
+              <li>Conducted due diligence via onsite visits, management interviews, and industry conferences.</li>
+              <li>Performed market segment and competitive analysis; recommended investment thesis to sales force and traders.</li>
+            </ul>
+          </div>
+        </div>
+
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">Pioneer Works<br />Arts Foundation</div>
+            <div class="exp-dates">May 2017 — Dec 2018</div>
+          </div>
+          <div>
+            <div class="exp-title">Finance Consultant</div>
+            <ul class="exp-bullets">
+              <li>Developed finance operations and revenue model for a $7M non-profit, including internal controls and accounting.</li>
+              <li>Established performance KPIs and pricing strategy; built master operating financial model.</li>
+              <li>Identified and hired key staff to expand the finance department.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">FTI Consulting</div>
+            <div class="exp-dates">Jan 2016 — May 2017</div>
+          </div>
+          <div>
+            <div class="exp-title">Senior IR Consultant</div>
+            <ul class="exp-bullets">
+              <li>Capital Markets team: market intelligence and financial communication for clients (PTHN, OLN, WEX).</li>
+              <li>Directed external IR teams; provided analytical research on sell-side coverage and capital markets.</li>
+              <li>Authored CEO/CFO messaging for roadshows, Analyst Days, and all IR/corporate presentations.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">Monocrystal</div>
+            <div class="exp-dates">Apr 2014 — May 2015</div>
+          </div>
+          <div>
+            <div class="exp-title">Director of Investor Relations</div>
+            <ul class="exp-bullets">
+              <li>Designed and managed global IR program and capital market intelligence; reported to CEO and CFO.</li>
+              <li>Maintained company financial model; performed comparable company and transaction valuation analyses.</li>
+              <li>Led Board director search, leveraging professional network to identify viable candidates.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">Pennwell</div>
+            <div class="exp-dates">Jan 2012 — Apr 2014</div>
+          </div>
+          <div>
+            <div class="exp-title">Industry Analyst</div>
+            <ul class="exp-bullets">
+              <li>Covered solid-state lighting technology and electronic components; authored market reports and industry models.</li>
+              <li>Conducted interviews with industry leaders and performed competitive and supply chain analysis.</li>
+              <li>Coordinated Strategies in Light Investor Forum — 175+ investors and executives.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-row">
+          <div class="exp-meta">
+            <div class="exp-company">Photon-L</div>
+            <div class="exp-dates">Nov 2009 — Jan 2012</div>
+          </div>
+          <div>
+            <div class="exp-title">Finance Director &amp; Co-Founder</div>
+            <ul class="exp-bullets">
+              <li>Co-founded international LED lighting manufacturer; raised $1.5M from investors.</li>
+              <li>Managed finance division including working capital, payroll, purchasing, and revenue streams.</li>
+              <li>Traveled across Asia (China, Singapore, Taiwan, Hong Kong) to build supplier and OEM relationships.</li>
+              <li>Developed business plans, sales projections, and financial forecasts for investor presentations.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+      <div class="two-col" style="margin-bottom: 2.5rem;">
+        <div><span class="label">Education</span></div>
+        <div></div>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-cell">
+          <div class="edu-school">Wall Street Prep</div>
+          <div class="edu-degree">Professional Development</div>
+          <div class="edu-meta" style="margin-bottom: 0.75rem;"></div>
+          <p style="font-size: 0.82rem; color: var(--mid);">Financial modeling, statement analysis, and M&amp;A courses.</p>
+        </div>
+        <div class="edu-cell">
+          <div class="edu-school">Middlebury Institute</div>
+          <div class="edu-degree">MBA — International Management</div>
+          <div class="edu-meta" style="margin-bottom: 0.75rem;">Monterey, CA · GPA 3.5 · Merit Scholarship</div>
+          <p style="font-size: 0.82rem; color: var(--mid);">Financial Accounting (UC Berkeley), Auditing, Advanced Accounting (UCLA).</p>
+        </div>
+        <div class="edu-cell">
+          <div class="edu-school">Orenburg State University</div>
+          <div class="edu-degree">BS — Linguistics &amp; Teaching</div>
+          <div class="edu-meta" style="margin-bottom: 0.75rem;">Orenburg, Russia · GPA 3.9 · Full Merit Scholarship</div>
+          <p style="font-size: 0.82rem; color: var(--mid);">French &amp; English. Full merit-based scholarship.</p>
+        </div>
+      </div>
+      <div class="extras">
+        <div class="extra-item">
+          <span class="extra-dash">—</span>
+          <p><strong>Guest Lecturer, NY Fashion Institute of Technology (FIT)</strong> — Teaching finance for Entrepreneurship Majors: financial modeling, valuation, and fundraising.</p>
+        </div>
+        <div class="extra-item">
+          <span class="extra-dash">—</span>
+          <p><strong>Advisor, Amadeo Global</strong> (Credit &amp; Equity VC Fund) — Coaching entrepreneurs on financial models for growth, exit scenarios, and capital requirements.</p>
+        </div>
+        <div class="extra-item">
+          <span class="extra-dash">—</span>
+          <p><strong>FINRA SIE Certified</strong> · Series 7 in progress.</p>
+        </div>
+        <div class="extra-item">
+          <span class="extra-dash">—</span>
+          <p>Interests: sailing, biking, hiking, international travel (30+ countries), financial literacy advocacy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+      <h2>Let's work<br /><em>together.</em></h2>
+      <p class="contact-sub">
+        Open to conversations about equity research, IR strategy, private markets, or finance leadership.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:katya.evstratyeva@gmail.com" class="contact-link">katya.evstratyeva@gmail.com</a>
+<a href="katya-evstratyeva-resume.pdf" target="_blank" class="contact-link">Download Résumé ↓</a>
+      </div>
+      <p class="contact-location">New York, NY · Available for US &amp; international opportunities</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span>© 2026 Katya Evstratyeva</span>
+      <nav class="footer-links">
+        <a href="#about">About</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </footer>
+
+  </div><!-- /page -->
+</body>
+</html>

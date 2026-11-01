@@ -1269,7 +1269,7 @@ function renderEvents(){
     const isUpcoming=e.date>=today
     const tracked=e.companies.map(n=>({n,co:findCo(n)})).filter(x=>x.co)
     const untracked=e.companies.filter(n=>!findCo(n))
-    const divTags=e.divisions.map(d=>{const c=DIV_COLOR[d]||'#888';return `<span class="badge" style="background:${c}22;color:${c};font-size:10px">${d}</span>`}).join('')
+    const divTags=e.divisions.map(d=>{const c=DIV_COLOR[d]||'#888';return `<span class="badge" style="background:${c}22;color:${c};font-size:10px;cursor:pointer" onclick="navigate('interactions',{filterDivision:'${d}'})" title="View ${d} interactions">${d} ↗</span>`}).join('')
 
     const trackedPills=tracked.map(({n,co})=>{
       const dot=STATUS_DOT[co.status]||'#888'

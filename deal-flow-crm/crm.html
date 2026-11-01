@@ -232,6 +232,29 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 .ec-company-pill:hover{color:var(--text);border-color:var(--border2)}
 .ec-divs{display:flex;gap:5px;flex-wrap:wrap}
 .badge-conference{background:rgba(79,124,255,.12);color:#4f7cff}
+/* ── EVENTS ENHANCED ── */
+.ev-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.ev-stat{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.ev-stat-val{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1}
+.ev-stat-label{font-size:11px;color:var(--t3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.ev-stat-sub{font-size:11px;color:var(--t2);margin-top:3px}
+.ev-filters-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.ev-region-tabs{display:flex;gap:0;background:var(--s2);border:1px solid var(--border);border-radius:999px;padding:2px}
+.ev-region-btn{padding:5px 15px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t2);transition:all .12s}
+.ev-region-btn.active{background:var(--accent);color:#fff}
+.ev-type-chips{display:flex;gap:6px;flex-wrap:wrap}
+.ev-type-chip{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--s2);color:var(--t2);transition:all .12s}
+.ev-type-chip.active{border-color:var(--accent);background:var(--accent-dim);color:var(--accent)}
+.ec-cos-section{margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.ec-cos-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.ec-cos-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t3)}
+.ec-track-count{font-size:11px;color:var(--accent);font-weight:700}
+.ec-pills{display:flex;flex-wrap:wrap;gap:5px}
+.ec-tracked-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;background:rgba(79,124,255,.1);border:1px solid rgba(79,124,255,.25);border-radius:999px;padding:3px 10px;color:var(--accent);cursor:pointer;transition:all .12s}
+.ec-tracked-pill:hover{background:rgba(79,124,255,.2);border-color:var(--accent)}
+.ec-status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ec-untracked-pill{display:inline-flex;align-items:center;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:999px;padding:3px 10px;color:var(--t3)}
+.ec-region-badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;background:var(--s3);color:var(--t2);border:1px solid var(--border)}
 .badge-prospect{background:rgba(255,214,0,.1);color:#ffd600}
 .badge-networking{background:rgba(171,71,188,.12);color:#ce93d8}
 .badge-upcoming{background:rgba(79,124,255,.14);color:#4f7cff}
@@ -717,22 +740,29 @@ const SEED_DEALS = [
 // ─── EVENTS ───────────────────────────────────────────────────────
 const SEED_EVENTS = [
   // ── Past conferences ──
-  {id:'ev1',name:'SaaS Growth Summit',type:'Conference',date:'2023-10-15',location:'San Francisco, CA',status:'Past',description:'Annual gathering for growth-stage SaaS companies and institutional investors. Strong IB and ER attendance.',companies:['Nexara Technologies','Stackflow','Crestline Analytics','Kronex Security','Stratos Cloud','Arion Software','Halo Medical','Quill Edtech','Velox Commerce','Radian Security'],divisions:['Equity Research','Asset Management','Investment Banking'],contactsMet:10},
-  {id:'ev2',name:'Scale-Up Finance Summit',type:'Conference',date:'2023-11-08',location:'New York, NY',status:'Past',description:'CFO-focused summit for scaling private companies seeking institutional capital. Concentrated deal flow.',companies:['Vaultr','Lumis Financial','Praxis Health','Meridian Health'],divisions:['Investment Banking','Wealth Management'],contactsMet:7},
-  {id:'ev3',name:'Private Markets IR Forum',type:'Conference',date:'2023-12-05',location:'Chicago, IL',status:'Past',description:'IR professionals from top private growth-stage companies present to LPs and bank coverage teams.',companies:['Zephyr Energy','Orbital Systems','Verdant Logistics','Helix Genomics'],divisions:['Asset Management','Direct Investment'],contactsMet:8},
-  {id:'ev4',name:'Pre-IPO Readiness Conference',type:'Conference',date:'2024-02-20',location:'New York, NY',status:'Past',description:'Focused on companies 18–36 months from IPO. Heavy IB and ER presence. S-1 readiness panels.',companies:['Meridian Health','Praxis Health','Orbital Systems','Zephyr Energy','Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:9},
-  {id:'ev5',name:'Venture Forward Conference',type:'Conference',date:'2024-03-15',location:'Austin, TX',status:'Past',description:'Series C/D founders presenting to growth equity and late-stage investors. Strong pipeline sourcing event.',companies:['Kronex Security','Lumis Financial','Nexara Technologies','Quanta Robotics'],divisions:['Asset Management','Direct Investment'],contactsMet:6},
-  {id:'ev6',name:'Annual Investor Day Forum',type:'Conference',date:'2024-05-22',location:'San Francisco, CA',status:'Past',description:'Flagship event connecting C-suite from growth companies with bank coverage teams across all divisions.',companies:['Vaultr','Stackflow','Arion Software','Crestline Analytics','Mosaic Biotech','Cobalt Proptech'],divisions:['Investment Banking','Wealth Management','Equity Research'],contactsMet:11},
+  {id:'ev1',name:'SaaS Growth Summit',type:'Conference',date:'2023-10-15',location:'San Francisco, CA',status:'Past',region:'US',description:'Annual gathering for growth-stage SaaS companies and institutional investors. Strong IB and ER attendance.',companies:['Nexara Technologies','Stackflow','Crestline Analytics','Kronex Security','Stratos Cloud','Arion Software','Halo Medical','Quill Edtech','Velox Commerce','Radian Security'],divisions:['Equity Research','Asset Management','Investment Banking'],contactsMet:10},
+  {id:'ev2',name:'Scale-Up Finance Summit',type:'Conference',date:'2023-11-08',location:'New York, NY',status:'Past',region:'US',description:'CFO-focused summit for scaling private companies seeking institutional capital. Concentrated deal flow.',companies:['Vaultr','Lumis Financial','Praxis Health','Meridian Health'],divisions:['Investment Banking','Wealth Management'],contactsMet:7},
+  {id:'ev3',name:'Private Markets IR Forum',type:'Conference',date:'2023-12-05',location:'Chicago, IL',status:'Past',region:'US',description:'IR professionals from top private growth-stage companies present to LPs and bank coverage teams.',companies:['Zephyr Energy','Orbital Systems','Verdant Logistics','Helix Genomics'],divisions:['Asset Management','Direct Investment'],contactsMet:8},
+  {id:'ev4',name:'Pre-IPO Readiness Conference',type:'Conference',date:'2024-02-20',location:'New York, NY',status:'Past',region:'US',description:'Focused on companies 18–36 months from IPO. Heavy IB and ER presence. S-1 readiness panels.',companies:['Meridian Health','Praxis Health','Orbital Systems','Zephyr Energy','Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:9},
+  {id:'ev5',name:'Venture Forward Conference',type:'Conference',date:'2024-03-15',location:'Austin, TX',status:'Past',region:'US',description:'Series C/D founders presenting to growth equity and late-stage investors. Strong pipeline sourcing event.',companies:['Kronex Security','Lumis Financial','Nexara Technologies','Quanta Robotics'],divisions:['Asset Management','Direct Investment'],contactsMet:6},
+  {id:'ev6',name:'Annual Investor Day Forum',type:'Conference',date:'2024-05-22',location:'San Francisco, CA',status:'Past',region:'US',description:'Flagship event connecting C-suite from growth companies with bank coverage teams across all divisions.',companies:['Vaultr','Stackflow','Arion Software','Crestline Analytics','Mosaic Biotech','Cobalt Proptech'],divisions:['Investment Banking','Wealth Management','Equity Research'],contactsMet:11},
   // ── Upcoming conferences ──
-  {id:'ev7',name:'Pre-IPO Summit 2026',type:'Conference',date:'2026-11-18',location:'New York, NY',status:'Upcoming',description:'Annual IPO readiness summit. Several pipeline companies expected to present. Key focus on market window timing for 2027.',companies:['Meridian Health','Orbital Systems','Nexara Technologies','Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:0},
-  {id:'ev8',name:'Private Credit & Growth Summit',type:'Conference',date:'2026-12-03',location:'Chicago, IL',status:'Upcoming',description:'Leveraged finance and direct lending conference for Series D+ companies. Strong LevFin and DI representation expected.',companies:['Zephyr Energy','Praxis Health','Vaultr','Mosaic Biotech'],divisions:['Leveraged Finance','Direct Investment'],contactsMet:0},
-  {id:'ev9',name:'Growth Equity Forum 2027',type:'Conference',date:'2027-01-21',location:'San Francisco, CA',status:'Upcoming',description:'Late-stage venture and growth equity showcase. High density of Series C/D companies actively seeking capital.',companies:['Stackflow','Kronex Security','Stratos Cloud','Arion Software','Lumis Financial'],divisions:['Asset Management','Investment Banking'],contactsMet:0},
-  {id:'ev10',name:'Founders & Financiers Summit',type:'Conference',date:'2027-02-11',location:'Miami, FL',status:'Upcoming',description:'Boutique invite-only event pairing growth founders with senior bankers. Prospect sourcing focus.',companies:['Cobalt Proptech','Aero Commerce','Velox Commerce','Quill Edtech'],divisions:['Investment Banking','Wealth Management'],contactsMet:0},
+  {id:'ev7',name:'Pre-IPO Summit 2026',type:'Conference',date:'2026-11-18',location:'New York, NY',status:'Upcoming',region:'US',description:'Annual IPO readiness summit. Several pipeline companies expected to present. Key focus on market window timing for 2027.',companies:['Meridian Health','Orbital Systems','Nexara Technologies','Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:0},
+  {id:'ev8',name:'Private Credit & Growth Summit',type:'Conference',date:'2026-12-03',location:'Chicago, IL',status:'Upcoming',region:'US',description:'Leveraged finance and direct lending conference for Series D+ companies. Strong LevFin and DI representation expected.',companies:['Zephyr Energy','Praxis Health','Vaultr','Mosaic Biotech'],divisions:['Leveraged Finance','Direct Investment'],contactsMet:0},
+  {id:'ev9',name:'Growth Equity Forum 2027',type:'Conference',date:'2027-01-21',location:'San Francisco, CA',status:'Upcoming',region:'US',description:'Late-stage venture and growth equity showcase. High density of Series C/D companies actively seeking capital.',companies:['Stackflow','Kronex Security','Stratos Cloud','Arion Software','Lumis Financial'],divisions:['Asset Management','Investment Banking'],contactsMet:0},
+  {id:'ev10',name:'Founders & Financiers Summit',type:'Conference',date:'2027-02-11',location:'Miami, FL',status:'Upcoming',region:'US',description:'Boutique invite-only event pairing growth founders with senior bankers. Prospect sourcing focus.',companies:['Cobalt Proptech','Aero Commerce','Velox Commerce','Quill Edtech'],divisions:['Investment Banking','Wealth Management'],contactsMet:0},
   // ── Upcoming prospect meetings ──
-  {id:'ev11',name:'Nexara Technologies — M&A Strategy Session',type:'Prospect Meeting',date:'2026-11-04',location:'New York, NY',status:'Upcoming',description:'Nexara leadership presenting updated M&A strategy. Potential mandate discussion for two acqui-hire targets in DevOps tooling space.',companies:['Nexara Technologies'],divisions:['Investment Banking'],contactsMet:0},
-  {id:'ev12',name:'Vaultr — WM Advisory Introduction',type:'Prospect Meeting',date:'2026-11-12',location:'Remote',status:'Upcoming',description:'Initial wealth management advisory introduction for Vaultr co-founders following IB engagement. Pre-liquidity planning focus.',companies:['Vaultr'],divisions:['Wealth Management'],contactsMet:0},
-  {id:'ev13',name:'Series D Founders Dinner',type:'Networking',date:'2026-12-10',location:'New York, NY',status:'Upcoming',description:'Intimate dinner with 12 founders from current pipeline. Relationship deepening across IB, WM and AM ahead of Q1 mandate season.',companies:['Lumis Financial','Helix Genomics','Aero Commerce','Prism Robotics'],divisions:['Investment Banking','Wealth Management','Asset Management'],contactsMet:0},
-  {id:'ev14',name:'Helix Genomics — IPO Pitch',type:'Prospect Meeting',date:'2026-11-25',location:'Boston, MA',status:'Upcoming',description:'Competitive pitch for lead-left IPO mandate. Helix shortlisted three banks. Decision expected mid-December.',companies:['Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:0},
+  {id:'ev11',name:'Nexara Technologies — M&A Strategy Session',type:'Prospect Meeting',date:'2026-11-04',location:'New York, NY',status:'Upcoming',region:'US',description:'Nexara leadership presenting updated M&A strategy. Potential mandate discussion for two acqui-hire targets in DevOps tooling space.',companies:['Nexara Technologies'],divisions:['Investment Banking'],contactsMet:0},
+  {id:'ev12',name:'Vaultr — WM Advisory Introduction',type:'Prospect Meeting',date:'2026-11-12',location:'Remote',status:'Upcoming',region:'US',description:'Initial wealth management advisory introduction for Vaultr co-founders following IB engagement. Pre-liquidity planning focus.',companies:['Vaultr'],divisions:['Wealth Management'],contactsMet:0},
+  {id:'ev13',name:'Series D Founders Dinner',type:'Networking',date:'2026-12-10',location:'New York, NY',status:'Upcoming',region:'US',description:'Intimate dinner with 12 founders from current pipeline. Relationship deepening across IB, WM and AM ahead of Q1 mandate season.',companies:['Lumis Financial','Helix Genomics','Aero Commerce','Prism Robotics'],divisions:['Investment Banking','Wealth Management','Asset Management'],contactsMet:0},
+  {id:'ev14',name:'Helix Genomics — IPO Pitch',type:'Prospect Meeting',date:'2026-11-25',location:'Boston, MA',status:'Upcoming',region:'US',description:'Competitive pitch for lead-left IPO mandate. Helix shortlisted three banks. Decision expected mid-December.',companies:['Helix Genomics'],divisions:['Investment Banking','Equity Research'],contactsMet:0},
+  // ── Upcoming Europe ──
+  {id:'ev15',name:'European Private Capital Summit',type:'Conference',date:'2027-01-14',location:'London, UK',status:'Upcoming',region:'Europe',description:'Premier gathering for European and transatlantic growth-stage companies seeking PE and VC capital. Strong cross-border mandate flow with several ARC-covered companies presenting in the growth track.',companies:['Nexara Technologies','Stackflow','Orbital Systems'],divisions:['Investment Banking','Asset Management'],contactsMet:0},
+  {id:'ev16',name:'SuperReturn International 2027',type:'Conference',date:'2027-02-19',location:'Berlin, Germany',status:'Upcoming',region:'Europe',description:'Leading global private equity and venture conference. Key for cross-border deal origination and European LP relationship building. ARC-covered companies presenting in growth and buyout tracks.',companies:['Helix Genomics','Zephyr Energy','Mosaic Biotech'],divisions:['Direct Investment','Leveraged Finance'],contactsMet:0},
+  {id:'ev17',name:'FinTech Nexus Europe',type:'Networking',date:'2027-03-06',location:'Amsterdam, Netherlands',status:'Upcoming',region:'Europe',description:'Top European fintech and financial infrastructure networking event. Key coverage opportunity for lending, payments, and data infrastructure companies ahead of Q2 mandate season.',companies:['Lumis Financial','Vaultr'],divisions:['Investment Banking','Equity Research'],contactsMet:0},
+  // ── Upcoming Asia ──
+  {id:'ev18',name:'Asia PE & Venture Summit',type:'Conference',date:'2027-01-29',location:'Singapore',status:'Upcoming',region:'Asia',description:'Premier Asia-Pacific private equity and venture capital summit. Cross-border deal origination across Singapore, Hong Kong, and Tokyo LP base. Strong pipeline companies from ARC coverage in tech and logistics.',companies:['Aero Commerce','Velox Commerce','Stratos Cloud'],divisions:['Asset Management','Investment Banking'],contactsMet:0},
+  {id:'ev19',name:'FinAsia Growth Forum',type:'Conference',date:'2027-02-25',location:'Hong Kong',status:'Upcoming',region:'Asia',description:'Pan-Asian financial infrastructure and growth equity forum. Strong LP network and cross-border capital deployment focus. ARC coverage companies in cybersecurity and EdTech attending.',companies:['Kronex Security','Quill Edtech'],divisions:['Asset Management','Direct Investment'],contactsMet:0},
 ]
 
 // ─── STATE ────────────────────────────────────────────────────────
@@ -747,6 +777,8 @@ let S = {
   filterStatus: '',
   filterDivision: '',
   filterCategory: 'all',
+  filterRegion: 'all',
+  filterEventType: 'all',
   interactions: [...SEED_INTERACTIONS],
   deals: [...SEED_DEALS],
 }
@@ -809,6 +841,7 @@ function stageBadge(s){return `<span class="badge ${s==='Series D'?'badge-sd':'b
 // ─── NAVIGATION ───────────────────────────────────────────────────
 function navigate(view,params={}){
   if(S.view==='interactions'&&view!=='interactions'){S.filterDivision='';S.filterCategory='all';S.search=''}
+  if(S.view==='events'&&view!=='events'){S.filterRegion='all';S.filterEventType='all'}
   S.view=view; Object.assign(S,params)
   renderSidebar(); renderTopbar(); renderContent()
   window.scrollTo&&document.getElementById('content')&&(document.getElementById('content').scrollTop=0)
@@ -1189,58 +1222,131 @@ function renderPipeline(){
 
 // ─── ANALYTICS ────────────────────────────────────────────────────
 function renderEvents(){
-  const today='2026-10-25'
-  const upcoming=SEED_EVENTS.filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date))
-  const past=SEED_EVENTS.filter(e=>e.date<today).sort((a,b)=>b.date.localeCompare(a.date))
+  const today=new Date().toISOString().slice(0,10)
+  const region=S.filterRegion||'all'
+  const evType=S.filterEventType||'all'
+
+  const trackedNames=new Set(SEED_COMPANIES.map(c=>c.name))
+  function findCo(name){return SEED_COMPANIES.find(c=>c.name===name)}
+
+  // stats from ALL events before filters
+  const allUpcoming=SEED_EVENTS.filter(e=>e.date>=today)
+  const nextEv=allUpcoming.sort((a,b)=>a.date.localeCompare(b.date))[0]
+  const nextDays=nextEv?Math.round((new Date(nextEv.date)-new Date(today))/864e5):null
+  const upcomingTrackedCos=new Set(allUpcoming.flatMap(e=>e.companies.filter(n=>trackedNames.has(n))))
+  const totalContactsMet=SEED_EVENTS.filter(e=>e.date<today).reduce((s,e)=>s+e.contactsMet,0)
+  const usUpcoming=allUpcoming.filter(e=>e.region==='US').length
+  const euUpcoming=allUpcoming.filter(e=>e.region==='Europe').length
+  const asUpcoming=allUpcoming.filter(e=>e.region==='Asia').length
+
+  // apply filters
+  let filtered=SEED_EVENTS
+  if(region!=='all') filtered=filtered.filter(e=>e.region===region)
+  if(evType!=='all') filtered=filtered.filter(e=>e.type===evType)
+  const upcoming=filtered.filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date))
+  const past=filtered.filter(e=>e.date<today).sort((a,b)=>b.date.localeCompare(a.date))
+
+  const regionFlag={'US':'🇺🇸','Europe':'🇪🇺','Asia':'🌏','Remote':'🔵'}
+  const STATUS_DOT={'Prospect':'#8fa892','Engaged':'#4fc3f7','In Diligence':'#ffc107','Client':'#00e676','Closed':'#ff4757'}
 
   function typeBadge(type){
     const map={'Conference':'badge-conference','Prospect Meeting':'badge-prospect','Networking':'badge-networking'}
     return `<span class="badge ${map[type]||'badge-prospect'}">${type}</span>`
   }
-  function fmtDate(d){
+  function fmtDateEv(d){
     const [y,m,day]=d.split('-')
     return new Date(y,m-1,day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
   }
   function daysUntil(d){
-    const diff=Math.round((new Date(d)-new Date(today))/(1000*60*60*24))
+    const diff=Math.round((new Date(d)-new Date(today))/864e5)
     if(diff===0) return '<span style="color:var(--accent);font-weight:700">Today</span>'
     if(diff===1) return '<span style="color:var(--accent)">Tomorrow</span>'
-    if(diff>0) return `<span style="color:var(--accent)">in ${diff} days</span>`
+    if(diff>0) return `<span style="color:var(--accent)">in ${diff}d</span>`
     return ''
   }
-  function eventCard(e){
+
+  function eventCard(e,isFirst){
     const isUpcoming=e.date>=today
+    const tracked=e.companies.map(n=>({n,co:findCo(n)})).filter(x=>x.co)
+    const untracked=e.companies.filter(n=>!findCo(n))
     const divTags=e.divisions.map(d=>{const c=DIV_COLOR[d]||'#888';return `<span class="badge" style="background:${c}22;color:${c};font-size:10px">${d}</span>`}).join('')
-    const companyPills=e.companies.map(c=>`<span class="ec-company-pill" onclick="navigate('companies')">${c}</span>`).join('')
+
+    const trackedPills=tracked.map(({n,co})=>{
+      const dot=STATUS_DOT[co.status]||'#888'
+      return `<span class="ec-tracked-pill" onclick="navigate('company-detail',{companyId:'${co.id}',companyTab:'overview'})" title="${co.status} · Click to view">
+        <span class="ec-status-dot" style="background:${dot}"></span>${n}
+        <span style="font-size:10px;color:var(--t2);font-weight:500">${co.status}</span>
+      </span>`
+    }).join('')
+    const untrackedPills=untracked.map(n=>`<span class="ec-untracked-pill">${n}</span>`).join('')
+
+    const flag=regionFlag[e.region]||''
     return `
     <div class="event-card ${isUpcoming?'upcoming':''}">
       <div class="ec-top">
         <div>
-          <div class="ec-name">${e.name}</div>
+          <div class="ec-name">${isFirst&&isUpcoming?`<span class="ev-next-flag" style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);background:rgba(79,124,255,.12);border:1px solid rgba(79,124,255,.3);border-radius:4px;padding:1px 6px;margin-right:6px">NEXT</span>`:``}${e.name}</div>
           <div class="ec-meta">
-            <span>📅 ${fmtDate(e.date)}</span>
+            <span>📅 ${fmtDateEv(e.date)}</span>
             <span>📍 ${e.location}</span>
             ${isUpcoming?`<span>${daysUntil(e.date)}</span>`:`<span style="color:var(--t3)">${e.contactsMet} contacts met</span>`}
           </div>
         </div>
-        <div style="display:flex;gap:6px;flex-shrink:0">
+        <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start">
           ${typeBadge(e.type)}
+          <span class="ec-region-badge">${flag} ${e.region||''}</span>
           <span class="badge ${isUpcoming?'badge-upcoming':'badge-past'}">${isUpcoming?'Upcoming':'Past'}</span>
         </div>
       </div>
       <div class="ec-desc">${e.description}</div>
-      <div class="ec-footer">
-        <div class="ec-companies">${companyPills}</div>
-        <div class="ec-divs">${divTags}</div>
-      </div>
+      ${tracked.length||untracked.length?`
+      <div class="ec-cos-section">
+        <div class="ec-cos-header">
+          <span class="ec-cos-label">Companies${tracked.length?` · <span style="color:var(--accent)">${tracked.length} tracked in CRM</span>`:''}</span>
+          ${untracked.length?`<span style="font-size:10px;color:var(--t3)">${untracked.length} not tracked</span>`:''}
+        </div>
+        <div class="ec-pills">${trackedPills}${untrackedPills}</div>
+      </div>`:``}
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">${divTags}</div>
     </div>`
   }
 
+  const regionBtns=['all','US','Europe','Asia'].map(r=>`<button class="ev-region-btn ${region===r?'active':''}" onclick="S.filterRegion='${r}';renderContent()">${r==='all'?'All Regions':regionFlag[r]+' '+r}</button>`).join('')
+  const typeBtns=[['all','All Types'],['Conference','Conference'],['Prospect Meeting','Meetings'],['Networking','Networking']].map(([v,l])=>`<button class="ev-type-chip ${evType===v?'active':''}" onclick="S.filterEventType='${v}';renderContent()">${l}</button>`).join('')
+
   return `
-  <div class="page-header"><h2>Events</h2><div style="font-size:13px;color:var(--t3)">${upcoming.length} upcoming · ${past.length} past</div></div>
-  ${upcoming.length?`<div class="events-section-label">Upcoming — Conferences &amp; Meetings</div>${upcoming.map(eventCard).join('')}`:''}
-  <div class="events-section-label">Past Conferences</div>
-  ${past.map(eventCard).join('')}
+  <div class="page-header"><h2>Events</h2><div style="font-size:13px;color:var(--t3)">${upcoming.length} upcoming · ${past.length} past${region!=='all'?' · '+region:''}</div></div>
+
+  <div class="ev-stats-row">
+    <div class="ev-stat">
+      <div class="ev-stat-val">${allUpcoming.length}</div>
+      <div class="ev-stat-label">Upcoming Events</div>
+      <div class="ev-stat-sub">🇺🇸 ${usUpcoming} · 🇪🇺 ${euUpcoming} · 🌏 ${asUpcoming}</div>
+    </div>
+    <div class="ev-stat">
+      <div class="ev-stat-val" style="color:var(--accent)">${upcomingTrackedCos.size}</div>
+      <div class="ev-stat-label">Tracked Companies Attending</div>
+      <div class="ev-stat-sub">Across all upcoming events</div>
+    </div>
+    <div class="ev-stat">
+      <div class="ev-stat-val">${nextDays!==null?nextDays:'—'}</div>
+      <div class="ev-stat-label">Days to Next Event</div>
+      <div class="ev-stat-sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${nextEv?nextEv.name:'None scheduled'}</div>
+    </div>
+    <div class="ev-stat">
+      <div class="ev-stat-val">${totalContactsMet}</div>
+      <div class="ev-stat-label">Contacts Met All-Time</div>
+      <div class="ev-stat-sub">${SEED_EVENTS.filter(e=>e.date<today).length} past events</div>
+    </div>
+  </div>
+
+  <div class="ev-filters-bar">
+    <div class="ev-region-tabs">${regionBtns}</div>
+    <div class="ev-type-chips">${typeBtns}</div>
+  </div>
+
+  ${upcoming.length?`<div class="events-section-label">Upcoming Events</div>${upcoming.map((e,i)=>eventCard(e,i===0)).join('')}`:`<div style="text-align:center;color:var(--t3);padding:40px 0;font-size:13px">No upcoming events match the selected filters</div>`}
+  ${past.length?`<div class="events-section-label" style="margin-top:24px">Past Events</div>${past.map(e=>eventCard(e,false)).join('')}`:''}
   `
 }
 

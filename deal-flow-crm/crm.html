@@ -211,9 +211,10 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 
 /* ── ANALYTICS ── */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.chart-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
-.chart-card h4{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
-.chart-wrap{position:relative;height:220px}
+.chart-card{background:var(--s2);border:1px solid var(--border2);border-radius:var(--radius);padding:20px 22px}
+.chart-card h4{font-size:11px;font-weight:700;color:#7a8a9a;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
+.chart-wrap{position:relative;height:260px}
+.chart-wrap canvas{cursor:pointer}
 
 /* ── EVENTS ── */
 .events-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--t3);margin:24px 0 10px}
@@ -1054,23 +1055,181 @@ function renderCompanyDetail(){
     </tbody></table></div></div>`
   :`<div class="empty"><div class="ei">⊙</div><p>No contacts yet — add the first one</p></div>`}`
 
+  // ── Overview computed data ──────────────────────────────────────
+  const allCix=S.interactions.filter(x=>x.companyId===co.id)
+  const firstTouch=cix.length?cix[cix.length-1]:null
+  const lastActivity=cix.length?cix[0]:null
+  const daysCoverage=firstTouch?Math.floor((Date.now()-new Date(firstTouch.date))/(864e5)):null
+  const daysStale=lastActivity?Math.floor((Date.now()-new Date(lastActivity.date))/(864e5)):null
+  const uniqueCtsMet=[...new Set(cix.map(x=>x.contactId).filter(Boolean))]
+  const divBreakdown={}; cix.forEach(x=>{divBreakdown[x.division]=(divBreakdown[x.division]||0)+1})
+  const typeBreakdown={}; cix.forEach(x=>{typeBreakdown[x.type]=(typeBreakdown[x.type]||0)+1})
+  const confIntros=cix.filter(x=>x.type==='Conference Intro')
+  const openDeals=cdx.filter(d=>!['Closed Won','Closed Lost'].includes(d.status))
+  const closedDeals=cdx.filter(d=>d.status==='Closed Won')
+  const divsCovered=Object.keys(divBreakdown)
+  const maxDiv=divsCovered.length?Math.max(...Object.values(divBreakdown)):1
+
+  // ── KPI row ─────────────────────────────────────────────────────
+  const kpiRow=`<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+    <div class="card" style="padding:14px 16px">
+      <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">INTERACTIONS</div>
+      <div style="font-size:22px;font-weight:700">${cix.length}</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:2px">${divsCovered.length} division${divsCovered.length!==1?'s':''}</div>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">CONTACTS MET</div>
+      <div style="font-size:22px;font-weight:700">${uniqueCtsMet.length}</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:2px">${ccts.length} at company</div>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">OPEN DEALS</div>
+      <div style="font-size:22px;font-weight:700">${openDeals.length}</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:2px">${closedDeals.length} closed</div>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">CLOSED VALUE</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent)">${fmt$(totalClosed)}</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:2px">${closedDeals.length} deal${closedDeals.length!==1?'s':''}</div>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">COVERAGE AGE</div>
+      <div style="font-size:22px;font-weight:700">${daysCoverage!==null?daysCoverage+'d':'—'}</div>
+      <div style="font-size:11px;color:${daysStale>90?'#ef4444':daysStale>45?'#f59e0b':'var(--t3)'};margin-top:2px">${daysStale!==null?daysStale+'d since last touch':'No activity'}</div>
+    </div>
+  </div>`
+
+  // ── Relationship Journey ─────────────────────────────────────────
+  const journeySteps=[
+    {label:'First Introduction',date:firstTouch?fmtDate(firstTouch.date):null,detail:firstTouch?firstTouch.type+' · '+firstTouch.division:null,done:!!firstTouch},
+    {label:'Active Engagement',date:cix.length>1?fmtDate([...cix].reverse().find((x,i)=>i>0)?.date||''):null,detail:cix.length>1?cix.length+' interactions logged':null,done:cix.length>1},
+    {label:'Deal / Mandate',date:cdx.length?fmtDate(cdx[cdx.length-1]?.dateEngaged):null,detail:cdx.length?cdx[cdx.length-1]?.type:null,done:cdx.length>0},
+    {label:'Closed',date:closedDeals.length?fmtDate(closedDeals[0].dateClosed):null,detail:closedDeals.length?fmt$(totalClosed)+' closed':null,done:closedDeals.length>0}
+  ]
+  const journeyHtml=`<div class="card" style="margin-bottom:12px;padding:16px 20px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:14px">RELATIONSHIP JOURNEY</div>
+    <div style="display:flex;align-items:flex-start;gap:0;position:relative">
+      ${journeySteps.map((s,i)=>`
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
+          ${i<3?`<div style="position:absolute;top:11px;left:50%;right:-50%;height:2px;background:${journeySteps[i+1].done?'var(--accent)':'rgba(255,255,255,0.1)'};z-index:0"></div>`:''}
+          <div style="width:22px;height:22px;border-radius:50%;border:2px solid ${s.done?'var(--accent)':'rgba(255,255,255,0.15)'};background:${s.done?'var(--accent)':'var(--s1)'};display:flex;align-items:center;justify-content:center;z-index:1;flex-shrink:0">
+            ${s.done?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2)"></div>'}
+          </div>
+          <div style="margin-top:8px;text-align:center;padding:0 4px">
+            <div style="font-size:11px;font-weight:600;color:${s.done?'var(--text)':'var(--t3)'}">${s.label}</div>
+            ${s.date?`<div style="font-size:10px;color:var(--accent);margin-top:2px">${s.date}</div>`:''}
+            ${s.detail?`<div style="font-size:10px;color:var(--t3);margin-top:1px;line-height:1.3">${s.detail}</div>`:''}
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`
+
+  // ── Two-column: Division Coverage + Interaction Types ───────────
+  const divCoverageHtml=`<div class="card" style="padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:12px">DIVISION COVERAGE</div>
+    ${divsCovered.length?divsCovered.map(d=>{
+      const cnt=divBreakdown[d]; const clr=DIV_COLOR[d]||'#888'; const pct=Math.round(cnt/maxDiv*100)
+      return `<div style="margin-bottom:9px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-size:12px;font-weight:600;color:${clr}">${d}</span>
+          <span style="font-size:11px;color:var(--t3)">${cnt} interaction${cnt!==1?'s':''}</span>
+        </div>
+        <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:2px">
+          <div style="width:${pct}%;height:100%;background:${clr};border-radius:2px;opacity:.8"></div>
+        </div>
+      </div>`}).join(''):`<div style="color:var(--t3);font-size:13px">No interactions yet</div>`}
+  </div>`
+
+  const typeSorted=Object.entries(typeBreakdown).sort((a,b)=>b[1]-a[1])
+  const typeColors={'Conference Intro':'#00e676','Introductory Call':'#3b82f6','In-Person Meeting':'#a855f7','Pitch':'#f97316','Due Diligence':'#eab308','Follow-up':'#06b6d4','Deal Discussion':'#ef4444','Coverage Initiation':'#8b5cf6','Other':'#6b7280'}
+  const interactionTypesHtml=`<div class="card" style="padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:12px">INTERACTION BREAKDOWN</div>
+    ${typeSorted.length?typeSorted.map(([t,n])=>{
+      const clr=typeColors[t]||'#888'
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:8px;height:8px;border-radius:50%;background:${clr};flex-shrink:0"></div>
+          <span style="font-size:12px;color:var(--text)">${t}</span>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:${clr}">${n}</span>
+      </div>`}).join(''):`<div style="color:var(--t3);font-size:13px">No interactions logged</div>`}
+  </div>`
+
+  // ── Conference Introductions ─────────────────────────────────────
+  const confIntroHtml=confIntros.length?`<div class="card" style="margin-bottom:12px;padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:12px">CONFERENCE INTRODUCTIONS (${confIntros.length})</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${confIntros.map(x=>{
+        const ct=getContact(x.contactId); const clr=DIV_COLOR[x.division]||'#888'
+        return `<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:var(--s1);border-radius:6px">
+          <div style="font-size:10px;color:var(--t3);white-space:nowrap;margin-top:1px;font-variant-numeric:tabular-nums">${fmtDate(x.date)}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:600;margin-bottom:2px">${x.notes||'Conference introduction'}</div>
+            ${ct?`<div style="font-size:11px;color:var(--t2)">Met: ${ct.name} · ${ct.title}</div>`:''}
+            ${x.outcome?`<div style="font-size:11px;color:var(--t3);margin-top:2px">→ ${x.outcome}</div>`:''}
+          </div>
+          <span style="font-size:10px;font-weight:600;background:${clr}22;color:${clr};border-radius:4px;padding:2px 7px;white-space:nowrap">${x.division}</span>
+        </div>`}).join('')}
+    </div>
+  </div>`:''
+
+  // ── Key Contacts at Company ──────────────────────────────────────
+  const keyContactsHtml=ccts.length?`<div class="card" style="margin-bottom:12px;padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:12px">KEY CONTACTS (${ccts.length})</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+      ${ccts.map(c=>{
+        const met=uniqueCtsMet.includes(c.id)
+        return `<div style="padding:10px 12px;background:var(--s1);border-radius:6px;border:1px solid ${met?'rgba(0,230,118,0.2)':'transparent'}">
+          <div style="font-size:12px;font-weight:600;margin-bottom:2px">${c.name}</div>
+          <div style="font-size:11px;color:var(--t2)">${c.title}</div>
+          ${c.eventsAttended&&c.eventsAttended.length?`<div style="font-size:10px;color:var(--t3);margin-top:3px">📍 ${Array.isArray(c.eventsAttended)?c.eventsAttended.join(', '):c.eventsAttended}</div>`:''}
+          ${met?`<div style="font-size:10px;color:var(--accent);margin-top:3px">● In timeline</div>`:''}
+        </div>`}).join('')}
+    </div>
+  </div>`:''
+
+  // ── Open Deals Snapshot ──────────────────────────────────────────
+  const openDealsHtml=openDeals.length?`<div class="card" style="margin-bottom:12px;padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:12px">ACTIVE DEALS (${openDeals.length})</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${openDeals.map(d=>{
+        const clr=DIV_COLOR[d.division]||'#888'
+        return `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;background:var(--s1);border-radius:6px">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:600">${d.type}</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:1px">Engaged ${fmtDate(d.dateEngaged)}</div>
+          </div>
+          <span style="font-size:10px;font-weight:600;background:${clr}22;color:${clr};border-radius:4px;padding:2px 7px;white-space:nowrap">${d.division}</span>
+          ${statusBadge(d.status)}
+          ${d.value?`<span style="font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap">${fmt$(d.value)}</span>`:''}
+        </div>`}).join('')}
+    </div>
+  </div>`:''
+
+  // ── About ────────────────────────────────────────────────────────
+  const aboutHtml=`<div class="card" style="padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:8px">ABOUT</div>
+    <p style="color:var(--t2);line-height:1.7;margin:0 0 8px">${co.description||'—'}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--t3)">
+      ${co.hq?`<span>📍 ${co.hq}</span>`:''}
+      ${co.founded?`<span>🗓 Est. ${co.founded}</span>`:''}
+      ${co.employees?`<span>👥 ~${co.employees} employees</span>`:''}
+    </div>
+  </div>`
+
   const overviewHtml=`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
-    <div class="card"><div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-weight:600;letter-spacing:.5px">INTERACTIONS</div><div style="font-size:24px;font-weight:700">${cix.length}</div></div>
-    <div class="card"><div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-weight:600;letter-spacing:.5px">DEALS</div><div style="font-size:24px;font-weight:700">${cdx.length}</div></div>
-    <div class="card"><div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-weight:600;letter-spacing:.5px">CLOSED VALUE</div><div style="font-size:24px;font-weight:700;color:var(--accent)">${fmt$(totalClosed)}</div></div>
-    <div class="card"><div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-weight:600;letter-spacing:.5px">FIRST TOUCH</div><div style="font-size:14px;font-weight:600">${cix.length?fmtDate(cix[cix.length-1].date):'—'}</div></div>
+  ${kpiRow}
+  ${journeyHtml}
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+    ${divCoverageHtml}
+    ${interactionTypesHtml}
   </div>
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--t3);margin-bottom:10px">INTERESTS &amp; COVERAGE</div>
-    <div style="display:flex;flex-wrap:wrap;gap:7px">${interestBadges}</div>
-  </div>
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--t3);margin-bottom:8px">ABOUT</div>
-    <p style="color:var(--t2);line-height:1.7;margin:0">${co.description||'—'}${co.hq?' · '+co.hq:''}${co.founded?' · Est. '+co.founded:''}${co.employees?' · ~'+co.employees+' employees':''}</p>
-  </div>
-  ${co.notes?`<div class="card">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--t3);margin-bottom:8px">NOTES</div>
+  ${confIntroHtml}
+  ${keyContactsHtml}
+  ${openDealsHtml}
+  ${aboutHtml}
+  ${co.notes?`<div class="card" style="margin-top:12px;padding:16px 18px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:8px">NOTES</div>
     <p style="color:var(--t2);line-height:1.7;white-space:pre-wrap;margin:0">${co.notes}</p>
   </div>`:''}`
 
@@ -1363,40 +1522,47 @@ function renderAnalytics(){
   return `
   <div class="page-header"><h2>Analytics</h2></div>
   <div class="stats-row">
-    <div class="stat-card"><div class="sv">${SEED_COMPANIES.length}</div><div class="sl">Companies Tracked</div></div>
-    <div class="stat-card"><div class="sv">${S.interactions.length}</div><div class="sl">Total Interactions</div></div>
-    <div class="stat-card"><div class="sv" style="color:var(--accent)">${fmt$(S.deals.filter(d=>d.status==='Closed Won').reduce((s,d)=>s+d.value,0))}</div><div class="sl">Closed Deal Value</div></div>
-    <div class="stat-card"><div class="sv">${S.deals.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div><div class="sl">Open Deals</div></div>
+    <div class="stat-card clickable" onclick="navigate('companies')" title="View all companies"><div class="sv">${SEED_COMPANIES.length}</div><div class="sl">Companies Tracked ↗</div></div>
+    <div class="stat-card clickable" onclick="navigate('interactions')" title="View all interactions"><div class="sv">${S.interactions.length}</div><div class="sl">Total Interactions ↗</div></div>
+    <div class="stat-card clickable" onclick="navigate('pipeline')" title="View deal pipeline" style="cursor:pointer"><div class="sv" style="color:var(--accent)">${fmt$(S.deals.filter(d=>d.status==='Closed Won').reduce((s,d)=>s+d.value,0))}</div><div class="sl">Closed Deal Value ↗</div></div>
+    <div class="stat-card clickable" onclick="navigate('pipeline')" title="View open deals"><div class="sv">${S.deals.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div><div class="sl">Open Deals ↗</div></div>
   </div>
   <div class="charts-grid">
-    <div class="chart-card"><h4>Company Status Funnel</h4><div class="chart-wrap"><canvas id="ch-funnel"></canvas></div></div>
-    <div class="chart-card"><h4>Interactions by Division</h4><div class="chart-wrap"><canvas id="ch-div"></canvas></div></div>
-    <div class="chart-card"><h4>Deal Value by Type</h4><div class="chart-wrap"><canvas id="ch-type"></canvas></div></div>
-    <div class="chart-card"><h4>Companies by Sector</h4><div class="chart-wrap"><canvas id="ch-sector"></canvas></div></div>
+    <div class="chart-card"><h4>Company Status Funnel <span style="font-size:11px;color:var(--t3);font-weight:400">click bar to filter</span></h4><div class="chart-wrap"><canvas id="ch-funnel"></canvas></div></div>
+    <div class="chart-card"><h4>Interactions by Division <span style="font-size:11px;color:var(--t3);font-weight:400">click slice to filter</span></h4><div class="chart-wrap"><canvas id="ch-div"></canvas></div></div>
+    <div class="chart-card"><h4>Deal Value by Type <span style="font-size:11px;color:var(--t3);font-weight:400">click bar to view pipeline</span></h4><div class="chart-wrap"><canvas id="ch-type"></canvas></div></div>
+    <div class="chart-card"><h4>Companies by Sector <span style="font-size:11px;color:var(--t3);font-weight:400">click slice to filter</span></h4><div class="chart-wrap"><canvas id="ch-sector"></canvas></div></div>
   </div>`
 }
 
 function initCharts(){
+  const GRID_COLOR='rgba(255,255,255,0.06)'
+  const TICK_COLOR='#5a6672'
+  const LEGEND_OPTS={color:'#b0bec5',font:{size:11},padding:16,usePointStyle:true,pointStyleWidth:9}
+  const AXIS_OPTS={ticks:{color:TICK_COLOR},grid:{color:GRID_COLOR},border:{color:'transparent'}}
   const CHART_DEFAULTS={
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#8fa892',font:{size:11}}}},
-    scales:{x:{ticks:{color:'#556860'},grid:{color:'#1e2b21'}},y:{ticks:{color:'#556860'},grid:{color:'#1e2b21'}}}
+    plugins:{legend:{labels:LEGEND_OPTS}},
+    scales:{x:{...AXIS_OPTS},y:{...AXIS_OPTS}}
   }
-  // Funnel
+  // Funnel — solid status colors, click navigates to companies filtered by status
+  const statusColors=['#6b7280','#3b82f6','#f59e0b','#00e676','#ef4444']
   const statusCounts=STATUS_ORDER.map(s=>SEED_COMPANIES.filter(c=>c.status===s).length)
-  new Chart(document.getElementById('ch-funnel'),{type:'bar',data:{labels:STATUS_ORDER,datasets:[{data:statusCounts,backgroundColor:['#8fa89230','#4fc3f730','#ffc10730','#00e67630','#ff475730'],borderColor:['#8fa892','#4fc3f7','#ffc107','#00e676','#ff4757'],borderWidth:1}]},options:{...CHART_DEFAULTS,plugins:{legend:{display:false}}}})
-  // By division
+  new Chart(document.getElementById('ch-funnel'),{type:'bar',data:{labels:STATUS_ORDER,datasets:[{data:statusCounts,backgroundColor:statusColors,borderWidth:0,borderRadius:5,borderSkipped:false}]},options:{...CHART_DEFAULTS,onClick:(e,els)=>{if(els.length){navigate('companies',{filterStatus:STATUS_ORDER[els[0].index],filterSector:'',filterStage:'',search:''})}},plugins:{legend:{display:false}},scales:{x:{...AXIS_OPTS},y:{...AXIS_OPTS,beginAtZero:true}}}})
+  // By division — solid fills, thicker doughnut, click navigates to interactions filtered by division
   const divCounts=DIVISIONS.map(d=>S.interactions.filter(x=>x.division===d).length)
-  new Chart(document.getElementById('ch-div'),{type:'doughnut',data:{labels:DIVISIONS,datasets:[{data:divCounts,backgroundColor:DIVISIONS.map(d=>(DIV_COLOR[d]||'#888')+'33'),borderColor:DIVISIONS.map(d=>DIV_COLOR[d]||'#888'),borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8fa892',font:{size:10}}}}}})
-  // Deal value by type
+  const divColors=DIVISIONS.map(d=>DIV_COLOR[d]||'#888')
+  new Chart(document.getElementById('ch-div'),{type:'doughnut',data:{labels:DIVISIONS,datasets:[{data:divCounts,backgroundColor:divColors.map(c=>c+'cc'),borderColor:divColors,borderWidth:2,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick:(e,els)=>{if(els.length){navigate('interactions',{filterDivision:DIVISIONS[els[0].index]})}},plugins:{legend:{labels:{...LEGEND_OPTS,font:{size:10}}}}}})
+  // Deal value by type — solid green bars, click navigates to pipeline
   const dealTypes=[...new Set(S.deals.map(d=>d.type.split('—')[0].trim()))]
   const dealVals=dealTypes.map(t=>S.deals.filter(d=>d.type.startsWith(t)&&d.status==='Closed Won').reduce((s,d)=>s+d.value,0))
-  new Chart(document.getElementById('ch-type'),{type:'bar',data:{labels:dealTypes,datasets:[{data:dealVals.map(v=>v/1e6),backgroundColor:'#00e67625',borderColor:'#00e676',borderWidth:1,label:'$M Closed'}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{legend:{display:false}}}})
-  // Sector breakdown
+  const barAlphas=['cc','bb','aa','99','88','77']
+  new Chart(document.getElementById('ch-type'),{type:'bar',data:{labels:dealTypes,datasets:[{data:dealVals.map(v=>v/1e6),backgroundColor:dealTypes.map((_,i)=>'#00e676'+(barAlphas[i]||'99')),borderWidth:0,borderRadius:4,borderSkipped:false,label:'$M Closed'}]},options:{...CHART_DEFAULTS,indexAxis:'y',onClick:()=>{navigate('pipeline')},plugins:{legend:{display:false}},scales:{x:{...AXIS_OPTS,beginAtZero:true},y:{...AXIS_OPTS}}}})
+  // Sector breakdown — solid fills, thicker doughnut, click navigates to companies filtered by sector
   const sectors=[...new Set(SEED_COMPANIES.map(c=>c.sector))]
   const sectCounts=sectors.map(s=>SEED_COMPANIES.filter(c=>c.sector===s).length)
-  const colors=['#ff6d00','#4fc3f7','#ab47bc','#7c4dff','#00bcd4','#ffca28','#ff7043','#00e676','#f06292','#aed581','#4db6ac','#ffd54f']
-  new Chart(document.getElementById('ch-sector'),{type:'doughnut',data:{labels:sectors,datasets:[{data:sectCounts,backgroundColor:colors.map(c=>c+'33'),borderColor:colors,borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8fa892',font:{size:10}}}}}})
+  const sColors=['#f97316','#3b82f6','#a855f7','#8b5cf6','#06b6d4','#eab308','#ef4444','#00e676','#ec4899','#84cc16','#14b8a6','#f59e0b']
+  new Chart(document.getElementById('ch-sector'),{type:'doughnut',data:{labels:sectors,datasets:[{data:sectCounts,backgroundColor:sColors.map(c=>c+'cc'),borderColor:sColors,borderWidth:2,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick:(e,els)=>{if(els.length){navigate('companies',{filterSector:sectors[els[0].index],filterStatus:'',filterStage:'',search:''})}},plugins:{legend:{labels:{...LEGEND_OPTS,font:{size:10}}}}}})
 }
 
 // ─── MODALS ───────────────────────────────────────────────────────

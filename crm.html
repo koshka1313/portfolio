@@ -15,9 +15,9 @@
   --s3: #252525;
   --border: rgba(255,255,255,.08);
   --border2: rgba(255,255,255,.14);
-  --accent: #4f7cff;
-  --accent-h: #3b6bef;
-  --accent-dim: rgba(79,124,255,.13);
+  --accent: #38bdf8;
+  --accent-h: #0ea5e9;
+  --accent-dim: rgba(56,189,248,.13);
   --text: #fff;
   --t2: rgba(255,255,255,.55);
   --t3: rgba(255,255,255,.3);
@@ -35,7 +35,7 @@ input::placeholder{color:var(--t3)}
 textarea{resize:vertical;min-height:72px}
 select option{background:var(--s2)}
 button{cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;border:none;border-radius:999px;padding:8px 18px;transition:all .15s;font-weight:500;letter-spacing:-.1px}
-.btn-primary{background:var(--accent);color:#fff;font-weight:700}
+.btn-primary{background:var(--accent);color:#003554;font-weight:700}
 .btn-primary:hover{background:var(--accent-h);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--border2);border-radius:999px}
 .btn-ghost:hover{background:var(--s2);color:var(--text)}
@@ -73,11 +73,11 @@ button{cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;border:none;
 .nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;cursor:pointer;color:var(--t2);font-size:13px;font-weight:500;border-radius:10px;margin-bottom:2px;transition:all .12s;border-left:none}
 .nav-item:hover{color:var(--text);background:var(--s2)}
 .nav-item.active{color:var(--accent);background:var(--accent-dim)}
-.nav-item .ni{font-size:14px;width:18px;text-align:center;opacity:.7}
+.nav-item .ni{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:.7}
 .nav-item.active .ni{opacity:1}
 .nav-section{padding:10px 10px 4px;font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--t3);text-transform:uppercase}
 .sb-footer{padding:12px}
-.sb-log-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:10px;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;text-align:center;letter-spacing:-.1px}
+.sb-log-btn{width:100%;background:var(--accent);color:#003554;border:none;border-radius:999px;padding:10px;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s;text-align:center;letter-spacing:-.1px}
 .sb-log-btn:hover{background:var(--accent-h);transform:translateY(-1px)}
 .sb-logout{margin-top:8px;width:100%;background:transparent;color:var(--t3);border:none;font-size:11px;cursor:pointer;padding:4px;border-radius:999px}
 .sb-logout:hover{color:var(--text)}
@@ -108,7 +108,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;border:none;
 .badge-prospect{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)}
 .badge-engaged{background:rgba(0,181,217,.12);color:#00b5d9}
 .badge-diligence{background:rgba(255,214,0,.12);color:#ffd600}
-.badge-client{background:rgba(79,124,255,.14);color:#4f7cff}
+.badge-client{background:rgba(56,189,248,.14);color:#38bdf8}
 .badge-closed{background:rgba(224,42,50,.1);color:#e02a32}
 .badge-sc{background:rgba(0,181,217,.1);color:#00b5d9}
 .badge-sd{background:rgba(91,63,230,.12);color:#8b73f0}
@@ -116,7 +116,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;border:none;
 .badge-diligence2{background:rgba(255,214,0,.12);color:#ffd600}
 .badge-termsheet{background:rgba(242,101,0,.12);color:#f26500}
 .badge-signed{background:rgba(0,181,217,.12);color:#00b5d9}
-.badge-won{background:rgba(79,124,255,.14);color:#4f7cff}
+.badge-won{background:rgba(56,189,248,.14);color:#38bdf8}
 .badge-lost{background:rgba(224,42,50,.1);color:#e02a32}
 
 /* ── TABLE ── */
@@ -208,15 +208,15 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 .ec-company-pill{font-size:11px;font-weight:600;background:var(--s2);border:1px solid var(--border);border-radius:999px;padding:2px 10px;color:var(--t2);cursor:pointer;transition:all .12s}
 .ec-company-pill:hover{color:var(--text);border-color:var(--border2)}
 .ec-divs{display:flex;gap:5px;flex-wrap:wrap}
-.badge-conference{background:rgba(79,124,255,.12);color:#4f7cff}
+.badge-conference{background:rgba(56,189,248,.12);color:#38bdf8}
 .badge-prospect{background:rgba(255,214,0,.1);color:#ffd600}
 .badge-networking{background:rgba(171,71,188,.12);color:#ce93d8}
-.badge-upcoming{background:rgba(79,124,255,.14);color:#4f7cff}
+.badge-upcoming{background:rgba(56,189,248,.14);color:#38bdf8}
 .badge-past{background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)}
 
 /* ── EMPTY STATE ── */
 .empty{text-align:center;padding:40px 20px;color:var(--t3)}
-.empty .ei{font-size:32px;margin-bottom:8px}
+.empty .ei{font-size:32px;margin-bottom:8px;display:flex;justify-content:center;align-items:center;height:40px;color:var(--t3)}
 .empty p{font-size:13px}
 
 /* ── DIVISION COLORS ── */
@@ -343,6 +343,36 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
   </div>
 </div>
 
+<!-- MODAL: ADD COMPANY -->
+<div class="modal-overlay" id="modal-company">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add Company</h3>
+      <button class="modal-close" onclick="closeModal('company')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Company Name *</label><input type="text" id="co-name" placeholder="e.g. Nexara Technologies"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Sector *</label><select id="co-sector"><option value="">Select…</option><option>SaaS</option><option>Fintech</option><option>Healthtech</option><option>Biotech</option><option>Climate/Energy</option><option>Logistics</option><option>Cybersecurity</option><option>AI/ML</option><option>Robotics</option><option>Edtech</option><option>Proptech</option><option>E-commerce</option><option>Other</option></select></div>
+        <div class="form-group"><label>Stage *</label><select id="co-stage"><option value="">Select…</option><option>Series C</option><option>Series D</option><option>Series E+</option><option>Pre-IPO</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Status</label><select id="co-status"><option>Prospect</option><option>Engaged</option><option>In Diligence</option><option>Client</option></select></div>
+        <div class="form-group"><label>HQ</label><input type="text" id="co-hq" placeholder="e.g. New York, NY"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Founded</label><input type="number" id="co-founded" placeholder="e.g. 2019"></div>
+        <div class="form-group"><label>Employees</label><input type="text" id="co-employees" placeholder="e.g. 100-200"></div>
+      </div>
+      <div class="form-group"><label>Description</label><textarea id="co-desc" placeholder="One-line company description…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('company')">Cancel</button>
+      <button class="btn-primary" onclick="saveCompany()">Add Company</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ─── CONSTANTS ────────────────────────────────────────────────────
 const DIVISIONS = ['Investment Banking','Equity Research','Wealth Management','Asset Management','Direct Investment','Corporate Finance','Leveraged Finance']
@@ -396,53 +426,53 @@ const SEED_COMPANIES = [
 ]
 
 const SEED_CONTACTS = [
-  {id:'1',name:'Sarah Chen',title:'CFO',companyId:'c1',company:'Nexara Technologies',events:['SaaS Growth Summit']},
-  {id:'2',name:'Michael Rodriguez',title:'VP of Finance',companyId:'c2',company:'Vaultr',events:['Private Markets IR Forum']},
-  {id:'3',name:'Emily Thompson',title:'Head of Investor Relations',companyId:'c3',company:'Meridian Health',events:['Pre-IPO Readiness Conference']},
-  {id:'4',name:'David Kim',title:'Co-Founder & CTO',companyId:'c4',company:'Stackflow',events:['SaaS Growth Summit']},
-  {id:'5',name:'Jessica Patel',title:'Director of Finance',companyId:'c5',company:'Zephyr Energy',events:['Venture Forward Conference']},
-  {id:'6',name:'James Morrison',title:'Chief Revenue Officer',companyId:'c6',company:'Crestline Analytics',events:['SaaS Growth Summit']},
-  {id:'7',name:'Aisha Williams',title:'VP of Growth',companyId:'c7',company:'Orbital Systems',events:['Scale-Up Finance Summit']},
-  {id:'8',name:'Robert Nakamura',title:'Head of Corporate Development',companyId:'c8',company:'Lumis Financial',events:['Private Markets IR Forum']},
-  {id:'9',name:'Maria Santos',title:'CFO',companyId:'c9',company:'Praxis Health',events:['Pre-IPO Readiness Conference']},
-  {id:'10',name:'Thomas Walsh',title:'Founder & CEO',companyId:'c10',company:'Aero Commerce',events:['Venture Forward Conference']},
-  {id:'11',name:'Priya Sharma',title:'VP of Partnerships',companyId:'c11',company:'Kronex Security',events:['SaaS Growth Summit']},
-  {id:'12',name:'William Foster',title:'Chief of Staff',companyId:'c12',company:'Solace Networks',events:['Scale-Up Finance Summit']},
-  {id:'13',name:'Natalie Brooks',title:'Senior Financial Analyst',companyId:'c13',company:'Verdant Logistics',events:['Private Markets IR Forum']},
-  {id:'14',name:'Alexander Petrov',title:'Head of Investor Relations',companyId:'c14',company:'Pinnacle Data',events:['Pre-IPO Readiness Conference']},
-  {id:'15',name:'Lauren Mitchell',title:'VP of Finance',companyId:'c15',company:'Quanta Robotics',events:['Venture Forward Conference']},
-  {id:'16',name:'Kevin O\'Brien',title:'Co-Founder & CEO',companyId:'c16',company:'Stratos Cloud',events:['SaaS Growth Summit']},
-  {id:'17',name:'Sophia Lindqvist',title:'Director of Business Development',companyId:'c17',company:'Helix Genomics',events:['Scale-Up Finance Summit']},
-  {id:'18',name:'Marcus Johnson',title:'CFO',companyId:'c18',company:'Plenio AI',events:['Private Markets IR Forum']},
-  {id:'19',name:'Rachel Cohen',title:'Head of Capital Markets',companyId:'c19',company:'Rivervault',events:['Pre-IPO Readiness Conference']},
-  {id:'20',name:'Daniel Okafor',title:'VP of Product',companyId:'c20',company:'Claros Biotech',events:['Venture Forward Conference']},
-  {id:'21',name:'Claire Dupont',title:'CFO',companyId:'c21',company:'Arion Software',events:['SaaS Growth Summit']},
-  {id:'22',name:'Benjamin Lee',title:'Senior Financial Analyst',companyId:'c22',company:'Delphi Markets',events:['Scale-Up Finance Summit']},
-  {id:'23',name:'Amanda Schultz',title:'Head of Investor Relations',companyId:'c23',company:'Evio Labs',events:['Private Markets IR Forum']},
-  {id:'24',name:'Carlos Rivera',title:'VP of Finance',companyId:'c24',company:'Fathom Analytics',events:['Pre-IPO Readiness Conference']},
-  {id:'25',name:'Nina Johansson',title:'Director of Finance',companyId:'c25',company:'Groundwork Proptech',events:['Venture Forward Conference']},
-  {id:'26',name:'Patrick Murphy',title:'Chief Revenue Officer',companyId:'c26',company:'Halo Medical',events:['SaaS Growth Summit']},
-  {id:'27',name:'Yuki Tanaka',title:'VP of Growth',companyId:'c27',company:'Irido Connect',events:['Scale-Up Finance Summit']},
-  {id:'28',name:'Victoria Adams',title:'CFO',companyId:'c28',company:'Jove Payments',events:['Private Markets IR Forum']},
-  {id:'29',name:'Raj Krishnan',title:'Co-Founder & CTO',companyId:'c29',company:'Keystone Robotics',events:['Pre-IPO Readiness Conference']},
-  {id:'30',name:'Emma Wilson',title:'Senior Financial Analyst',companyId:'c30',company:'Luminary Health',events:['Venture Forward Conference']},
-  {id:'31',name:'Steven Park',title:'Head of Strategy',companyId:'c1',company:'Nexara Technologies',events:['SaaS Growth Summit']},
-  {id:'32',name:'Isabella Ferrari',title:'Associate',companyId:'c31',company:'Mosaic Biotech',events:['Scale-Up Finance Summit']},
-  {id:'33',name:'Omar Abdullah',title:'Director',companyId:'c32',company:'Nuvelo Energy',events:['Private Markets IR Forum']},
-  {id:'34',name:'Grace Liu',title:'Head of Investor Relations',companyId:'c33',company:'Orbit AI',events:['Pre-IPO Readiness Conference']},
-  {id:'35',name:'Christopher Hall',title:'Founder & CEO',companyId:'c34',company:'Paragon Logistics',events:['Venture Forward Conference']},
-  {id:'36',name:'Zoe Andersson',title:'CFO',companyId:'c35',company:'Quill Edtech',events:['SaaS Growth Summit']},
-  {id:'37',name:'Jonathan Levy',title:'VP of Finance',companyId:'c36',company:'Radian Security',events:['Scale-Up Finance Summit']},
-  {id:'38',name:'Mei Lin Zhang',title:'Director of Business Development',companyId:'c37',company:'Solis Climate',events:['Private Markets IR Forum']},
-  {id:'39',name:'Andrew Campbell',title:'Head of Capital Markets',companyId:'c38',company:'Telos Health',events:['Pre-IPO Readiness Conference']},
-  {id:'40',name:'Fatima Al-Hassan',title:'Senior Financial Analyst',companyId:'c39',company:'Umbra Data',events:['Venture Forward Conference']},
-  {id:'41',name:'Lucas Novak',title:'Chief Revenue Officer',companyId:'c40',company:'Velox Commerce',events:['SaaS Growth Summit']},
-  {id:'53',name:'Jordan Hayes',title:'Head of Investor Relations',companyId:'c17',company:'Helix Genomics',events:['Private Markets IR Forum']},
-  {id:'55',name:'Nathan Goldstein',title:'Chief Revenue Officer',companyId:'c28',company:'Jove Payments',events:['Venture Forward Conference']},
-  {id:'62',name:'Miriam Steinberg',title:'Head of Investor Relations',companyId:'c35',company:'Quill Edtech',events:['Scale-Up Finance Summit']},
-  {id:'70',name:'Katarina Svensson',title:'Director',companyId:'c5',company:'Zephyr Energy',events:['ESG & Sustainable Finance Forum']},
-  {id:'80',name:'Anika Patel',title:'VP of Finance',companyId:'c20',company:'Claros Biotech',events:['Venture Forward Conference']},
-  {id:'91',name:'Reed Hoffman',title:'CFO',companyId:'c36',company:'Radian Security',events:['SaaS Growth Summit']}
+  {id:'1',name:'Sarah Chen',title:'CFO',companyId:'c1',company:'Nexara Technologies',email:'sarah.chen@nexaratech.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/sarah-chen-cfo',events:['SaaS Growth Summit']},
+  {id:'2',name:'Michael Rodriguez',title:'VP of Finance',companyId:'c2',company:'Vaultr',email:'m.rodriguez@vaultr.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/michael-rodriguez-fin',events:['Private Markets IR Forum']},
+  {id:'3',name:'Emily Thompson',title:'Head of Investor Relations',companyId:'c3',company:'Meridian Health',email:'e.thompson@meridianhealth.com',city:'Boston',state:'MA',linkedin:'linkedin.com/in/emily-thompson-ir',events:['Pre-IPO Readiness Conference']},
+  {id:'4',name:'David Kim',title:'Co-Founder & CTO',companyId:'c4',company:'Stackflow',email:'david.kim@stackflow.io',city:'Austin',state:'TX',linkedin:'linkedin.com/in/davidkim-stackflow',events:['SaaS Growth Summit']},
+  {id:'5',name:'Jessica Patel',title:'Director of Finance',companyId:'c5',company:'Zephyr Energy',email:'j.patel@zephyrenergy.com',city:'Houston',state:'TX',linkedin:'linkedin.com/in/jessica-patel-finance',events:['Venture Forward Conference']},
+  {id:'6',name:'James Morrison',title:'Chief Revenue Officer',companyId:'c6',company:'Crestline Analytics',email:'james.morrison@crestlineanalytics.com',city:'Chicago',state:'IL',linkedin:'linkedin.com/in/james-morrison-cro',events:['SaaS Growth Summit']},
+  {id:'7',name:'Aisha Williams',title:'VP of Growth',companyId:'c7',company:'Orbital Systems',email:'a.williams@orbitalsystems.com',city:'Seattle',state:'WA',linkedin:'linkedin.com/in/aisha-williams-growth',events:['Scale-Up Finance Summit']},
+  {id:'8',name:'Robert Nakamura',title:'Head of Corporate Development',companyId:'c8',company:'Lumis Financial',email:'r.nakamura@lumisfinancial.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/robert-nakamura-corpdev',events:['Private Markets IR Forum']},
+  {id:'9',name:'Maria Santos',title:'CFO',companyId:'c9',company:'Praxis Health',email:'maria.santos@praxishealth.com',city:'Atlanta',state:'GA',linkedin:'linkedin.com/in/maria-santos-cfo',events:['Pre-IPO Readiness Conference']},
+  {id:'10',name:'Thomas Walsh',title:'Founder & CEO',companyId:'c10',company:'Aero Commerce',email:'t.walsh@aerocommerce.com',city:'Los Angeles',state:'CA',linkedin:'linkedin.com/in/thomaswalsh-aero',events:['Venture Forward Conference']},
+  {id:'11',name:'Priya Sharma',title:'VP of Partnerships',companyId:'c11',company:'Kronex Security',email:'p.sharma@kronexsecurity.com',city:'Washington',state:'DC',linkedin:'linkedin.com/in/priya-sharma-partnerships',events:['SaaS Growth Summit']},
+  {id:'12',name:'William Foster',title:'Chief of Staff',companyId:'c12',company:'Solace Networks',email:'w.foster@solacenetworks.com',city:'Denver',state:'CO',linkedin:'linkedin.com/in/william-foster-cos',events:['Scale-Up Finance Summit']},
+  {id:'13',name:'Natalie Brooks',title:'Senior Financial Analyst',companyId:'c13',company:'Verdant Logistics',email:'n.brooks@verdantlogistics.com',city:'Dallas',state:'TX',linkedin:'linkedin.com/in/natalie-brooks-finance',events:['Private Markets IR Forum']},
+  {id:'14',name:'Alexander Petrov',title:'Head of Investor Relations',companyId:'c14',company:'Pinnacle Data',email:'a.petrov@pinnacledata.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/alexander-petrov-ir',events:['Pre-IPO Readiness Conference']},
+  {id:'15',name:'Lauren Mitchell',title:'VP of Finance',companyId:'c15',company:'Quanta Robotics',email:'l.mitchell@quantarobotics.com',city:'Boston',state:'MA',linkedin:'linkedin.com/in/lauren-mitchell-vp',events:['Venture Forward Conference']},
+  {id:'16',name:'Kevin O\'Brien',title:'Co-Founder & CEO',companyId:'c16',company:'Stratos Cloud',email:'kevin.obrien@stratoscloud.com',city:'Seattle',state:'WA',linkedin:'linkedin.com/in/kevinobrien-stratos',events:['SaaS Growth Summit']},
+  {id:'17',name:'Sophia Lindqvist',title:'Director of Business Development',companyId:'c17',company:'Helix Genomics',email:'s.lindqvist@helixgenomics.com',city:'San Diego',state:'CA',linkedin:'linkedin.com/in/sophia-lindqvist-bd',events:['Scale-Up Finance Summit']},
+  {id:'18',name:'Marcus Johnson',title:'CFO',companyId:'c18',company:'Plenio AI',email:'m.johnson@plenioai.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/marcus-johnson-cfo',events:['Private Markets IR Forum']},
+  {id:'19',name:'Rachel Cohen',title:'Head of Capital Markets',companyId:'c19',company:'Rivervault',email:'r.cohen@rivervault.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/rachel-cohen-capmkts',events:['Pre-IPO Readiness Conference']},
+  {id:'20',name:'Daniel Okafor',title:'VP of Product',companyId:'c20',company:'Claros Biotech',email:'d.okafor@clarosbiotech.com',city:'San Diego',state:'CA',linkedin:'linkedin.com/in/daniel-okafor-product',events:['Venture Forward Conference']},
+  {id:'21',name:'Claire Dupont',title:'CFO',companyId:'c21',company:'Arion Software',email:'c.dupont@arionsoftware.com',city:'Austin',state:'TX',linkedin:'linkedin.com/in/claire-dupont-cfo',events:['SaaS Growth Summit']},
+  {id:'22',name:'Benjamin Lee',title:'Senior Financial Analyst',companyId:'c22',company:'Delphi Markets',email:'b.lee@delphimarkets.com',city:'Chicago',state:'IL',linkedin:'linkedin.com/in/benjamin-lee-analyst',events:['Scale-Up Finance Summit']},
+  {id:'23',name:'Amanda Schultz',title:'Head of Investor Relations',companyId:'c23',company:'Evio Labs',email:'a.schultz@eviolabs.com',city:'Boston',state:'MA',linkedin:'linkedin.com/in/amanda-schultz-ir',events:['Private Markets IR Forum']},
+  {id:'24',name:'Carlos Rivera',title:'VP of Finance',companyId:'c24',company:'Fathom Analytics',email:'c.rivera@fathomanalytics.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/carlos-rivera-finance',events:['Pre-IPO Readiness Conference']},
+  {id:'25',name:'Nina Johansson',title:'Director of Finance',companyId:'c25',company:'Groundwork Proptech',email:'n.johansson@groundworkprop.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/nina-johansson-finance',events:['Venture Forward Conference']},
+  {id:'26',name:'Patrick Murphy',title:'Chief Revenue Officer',companyId:'c26',company:'Halo Medical',email:'p.murphy@halomedical.com',city:'Houston',state:'TX',linkedin:'linkedin.com/in/patrick-murphy-cro',events:['SaaS Growth Summit']},
+  {id:'27',name:'Yuki Tanaka',title:'VP of Growth',companyId:'c27',company:'Irido Connect',email:'y.tanaka@iridoconnect.com',city:'Los Angeles',state:'CA',linkedin:'linkedin.com/in/yuki-tanaka-growth',events:['Scale-Up Finance Summit']},
+  {id:'28',name:'Victoria Adams',title:'CFO',companyId:'c28',company:'Jove Payments',email:'v.adams@jovepayments.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/victoria-adams-cfo',events:['Private Markets IR Forum']},
+  {id:'29',name:'Raj Krishnan',title:'Co-Founder & CTO',companyId:'c29',company:'Keystone Robotics',email:'r.krishnan@keystonerobotics.com',city:'Pittsburgh',state:'PA',linkedin:'linkedin.com/in/rajkrishnan-keystone',events:['Pre-IPO Readiness Conference']},
+  {id:'30',name:'Emma Wilson',title:'Senior Financial Analyst',companyId:'c30',company:'Luminary Health',email:'e.wilson@luminaryhealth.com',city:'Minneapolis',state:'MN',linkedin:'linkedin.com/in/emma-wilson-analyst',events:['Venture Forward Conference']},
+  {id:'31',name:'Steven Park',title:'Head of Strategy',companyId:'c1',company:'Nexara Technologies',email:'s.park@nexaratech.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/steven-park-strategy',events:['SaaS Growth Summit']},
+  {id:'32',name:'Isabella Ferrari',title:'Associate',companyId:'c31',company:'Mosaic Biotech',email:'i.ferrari@mosaicbiotech.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/isabella-ferrari',events:['Scale-Up Finance Summit']},
+  {id:'33',name:'Omar Abdullah',title:'Director',companyId:'c32',company:'Nuvelo Energy',email:'o.abdullah@nuveloenergy.com',city:'Denver',state:'CO',linkedin:'linkedin.com/in/omar-abdullah-director',events:['Private Markets IR Forum']},
+  {id:'34',name:'Grace Liu',title:'Head of Investor Relations',companyId:'c33',company:'Orbit AI',email:'g.liu@orbitai.com',city:'Seattle',state:'WA',linkedin:'linkedin.com/in/grace-liu-ir',events:['Pre-IPO Readiness Conference']},
+  {id:'35',name:'Christopher Hall',title:'Founder & CEO',companyId:'c34',company:'Paragon Logistics',email:'c.hall@paragonlogistics.com',city:'Dallas',state:'TX',linkedin:'linkedin.com/in/christopherhall-paragon',events:['Venture Forward Conference']},
+  {id:'36',name:'Zoe Andersson',title:'CFO',companyId:'c35',company:'Quill Edtech',email:'z.andersson@quilledtech.com',city:'Chicago',state:'IL',linkedin:'linkedin.com/in/zoe-andersson-cfo',events:['SaaS Growth Summit']},
+  {id:'37',name:'Jonathan Levy',title:'VP of Finance',companyId:'c36',company:'Radian Security',email:'j.levy@radiansecurity.com',city:'Washington',state:'DC',linkedin:'linkedin.com/in/jonathan-levy-finance',events:['Scale-Up Finance Summit']},
+  {id:'38',name:'Mei Lin Zhang',title:'Director of Business Development',companyId:'c37',company:'Solis Climate',email:'ml.zhang@solisclimate.com',city:'San Francisco',state:'CA',linkedin:'linkedin.com/in/meilin-zhang-bd',events:['Private Markets IR Forum']},
+  {id:'39',name:'Andrew Campbell',title:'Head of Capital Markets',companyId:'c38',company:'Telos Health',email:'a.campbell@teloshealth.com',city:'Nashville',state:'TN',linkedin:'linkedin.com/in/andrew-campbell-capmkts',events:['Pre-IPO Readiness Conference']},
+  {id:'40',name:'Fatima Al-Hassan',title:'Senior Financial Analyst',companyId:'c39',company:'Umbra Data',email:'f.alhassan@umbradata.com',city:'Austin',state:'TX',linkedin:'linkedin.com/in/fatima-alhassan-analyst',events:['Venture Forward Conference']},
+  {id:'41',name:'Lucas Novak',title:'Chief Revenue Officer',companyId:'c40',company:'Velox Commerce',email:'l.novak@veloxcommerce.com',city:'Los Angeles',state:'CA',linkedin:'linkedin.com/in/lucas-novak-cro',events:['SaaS Growth Summit']},
+  {id:'53',name:'Jordan Hayes',title:'Head of Investor Relations',companyId:'c17',company:'Helix Genomics',email:'j.hayes@helixgenomics.com',city:'San Diego',state:'CA',linkedin:'linkedin.com/in/jordan-hayes-ir',events:['Private Markets IR Forum']},
+  {id:'55',name:'Nathan Goldstein',title:'Chief Revenue Officer',companyId:'c28',company:'Jove Payments',email:'n.goldstein@jovepayments.com',city:'New York',state:'NY',linkedin:'linkedin.com/in/nathan-goldstein-cro',events:['Venture Forward Conference']},
+  {id:'62',name:'Miriam Steinberg',title:'Head of Investor Relations',companyId:'c35',company:'Quill Edtech',email:'m.steinberg@quilledtech.com',city:'Chicago',state:'IL',linkedin:'linkedin.com/in/miriam-steinberg-ir',events:['Scale-Up Finance Summit']},
+  {id:'70',name:'Katarina Svensson',title:'Director',companyId:'c5',company:'Zephyr Energy',email:'k.svensson@zephyrenergy.com',city:'Houston',state:'TX',linkedin:'linkedin.com/in/katarina-svensson-dir',events:['ESG & Sustainable Finance Forum']},
+  {id:'80',name:'Anika Patel',title:'VP of Finance',companyId:'c20',company:'Claros Biotech',email:'a.patel@clarosbiotech.com',city:'San Diego',state:'CA',linkedin:'linkedin.com/in/anika-patel-finance',events:['Venture Forward Conference']},
+  {id:'91',name:'Reed Hoffman',title:'CFO',companyId:'c36',company:'Radian Security',email:'r.hoffman@radiansecurity.com',city:'Washington',state:'DC',linkedin:'linkedin.com/in/reed-hoffman-cfo',events:['SaaS Growth Summit']}
 ]
 
 const SEED_INTERACTIONS = [
@@ -641,19 +671,25 @@ let S = {
   filterStatus: '',
   interactions: [...SEED_INTERACTIONS],
   deals: [...SEED_DEALS],
+  companies: [...SEED_COMPANIES],
 }
 
 // persist additions
 function persist(){
-  localStorage.setItem('crm_ix',JSON.stringify(S.interactions.filter(x=>!SEED_INTERACTIONS.find(s=>s.id===x.id))))
-  localStorage.setItem('crm_deals',JSON.stringify(S.deals.filter(x=>!SEED_DEALS.find(s=>s.id===x.id))))
+  try{
+    localStorage.setItem('crm_ix',JSON.stringify(S.interactions.filter(x=>!SEED_INTERACTIONS.find(s=>s.id===x.id))))
+    localStorage.setItem('crm_deals',JSON.stringify(S.deals.filter(x=>!SEED_DEALS.find(s=>s.id===x.id))))
+    localStorage.setItem('crm_cos',JSON.stringify(S.companies.filter(x=>!SEED_COMPANIES.find(s=>s.id===x.id))))
+  }catch(e){}
 }
 function loadPersisted(){
   try{
     const ix=JSON.parse(localStorage.getItem('crm_ix')||'[]')
     const dx=JSON.parse(localStorage.getItem('crm_deals')||'[]')
+    const cx=JSON.parse(localStorage.getItem('crm_cos')||'[]')
     S.interactions=[...SEED_INTERACTIONS,...ix]
     S.deals=[...SEED_DEALS,...dx]
+    S.companies=[...SEED_COMPANIES,...cx]
   }catch(e){}
 }
 
@@ -684,7 +720,7 @@ function visibleDeals(cId){
   if(S.role!=='Admin') dx=dx.filter(x=>x.division===S.role)
   return dx
 }
-function getCompany(id){return SEED_COMPANIES.find(c=>c.id===id)}
+function getCompany(id){return S.companies.find(c=>c.id===id)}
 function getContact(id){return SEED_CONTACTS.find(c=>c.id===id)}
 function fmt$(v){if(!v)return '—';if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B';if(v>=1e6)return '$'+(v/1e6).toFixed(0)+'M';return '$'+v.toLocaleString()}
 function fmtDate(d){if(!d)return '—';const p=d.split('-');return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1]+' '+p[2]+', '+p[0]}
@@ -706,14 +742,23 @@ function navigate(view,params={}){
 // ─── SIDEBAR ──────────────────────────────────────────────────────
 function renderSidebar(){
   const isAdmin=S.role==='Admin'
+  const IC={
+    dashboard:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="8" y="1" width="6" height="6" rx="1"/><rect x="1" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg>`,
+    companies:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="13" height="10" rx="1"/><path d="M5 14v-4h2v4M8 14v-4h2v4M1 7.5h13"/><rect x="4.5" y="1" width="6" height="3" rx="0.5"/></svg>`,
+    contacts:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5" r="2.5"/><path d="M1.5 14c0-3.314 2.686-6 6-6s6 2.686 6 6"/></svg>`,
+    interactions:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 9.5c0 .828-.672 1.5-1.5 1.5H4l-2.5 3V2.5C1.5 1.672 2.172 1 3 1h9c.828 0 1.5.672 1.5 1.5v7z"/></svg>`,
+    pipeline:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2h13l-4.5 5.5v5.5l-4-2V7.5L1 2z"/></svg>`,
+    events:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="13" height="11" rx="1.5"/><path d="M10.5 1v4M4.5 1v4M1 7h13"/></svg>`,
+    analytics:`<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 11l4-5 3 3 6-7"/><path d="M1 14h13"/></svg>`,
+  }
   const items=[
-    {view:'dashboard',icon:'⊡',label:'Dashboard'},
-    {view:'companies',icon:'⊞',label:'Companies'},
-    {view:'contacts',icon:'⊙',label:'Contacts'},
-    {view:'interactions',icon:'⊛',label:'Interactions'},
-    {view:'pipeline',icon:'⊟',label:'Pipeline'},
-    {view:'events',icon:'⊘',label:'Events'},
-    ...(isAdmin?[{view:'analytics',icon:'⊕',label:'Analytics'}]:[])
+    {view:'dashboard',icon:IC.dashboard,label:'Dashboard'},
+    {view:'companies',icon:IC.companies,label:'Companies'},
+    {view:'contacts',icon:IC.contacts,label:'Contacts'},
+    {view:'interactions',icon:IC.interactions,label:'Interactions'},
+    {view:'pipeline',icon:IC.pipeline,label:'Pipeline'},
+    {view:'events',icon:IC.events,label:'Events'},
+    ...(isAdmin?[{view:'analytics',icon:IC.analytics,label:'Analytics'}]:[])
   ]
   document.getElementById('sb-role-name').textContent=S.role
   document.getElementById('sb-nav').innerHTML=items.map(i=>`
@@ -765,7 +810,7 @@ function renderDashboard(){
 
   return `
   <div class="stats-row">
-    <div class="stat-card"><div class="sv">${SEED_COMPANIES.length}</div><div class="sl">Companies Tracked</div><div class="sd">All sectors</div></div>
+    <div class="stat-card"><div class="sv">${S.companies.length}</div><div class="sl">Companies Tracked</div><div class="sd">All sectors</div></div>
     <div class="stat-card"><div class="sv">${activeCompanyIds}</div><div class="sl">Active Last 90 Days</div><div class="sd">By interactions</div></div>
     <div class="stat-card"><div class="sv">${activeDx.length}</div><div class="sl">Open Deals</div><div class="sd">${S.role==='Admin'?'All divisions':'Your pipeline'}</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--accent)">${fmt$(totalValue)}</div><div class="sl">Closed Deal Value</div><div class="sd">${closedDeals.length} deals closed</div></div>
@@ -786,7 +831,7 @@ function renderDashboard(){
             <div class="tl-notes" style="font-size:12px">${x.type} ${ct?'· '+ct.name:''}</div>
           </div>
         </div>`
-      }).join('')}</div>`:`<div class="empty"><div class="ei">⊙</div><p>No interactions logged yet</p></div>`}
+      }).join('')}</div>`:`<div class="empty"><div class="ei"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15c0 1.105-.895 2-2 2H6l-4 4V4c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v11z"/></svg></div><p>No interactions logged yet</p></div>`}
     </div>
     <div class="card">
       <div class="card-header"><h3>Open Pipeline</h3><button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="navigate('pipeline')">View all</button></div>
@@ -797,7 +842,7 @@ function renderDashboard(){
           <td>${statusBadge(d.status)}</td>
           <td style="color:var(--accent);font-weight:600">${fmt$(d.value)}</td>
         </tr>`}).join('')}
-      </tbody></table>`:`<div class="empty"><div class="ei">⊟</div><p>No open deals</p></div>`}
+      </tbody></table>`:`<div class="empty"><div class="ei"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-6.5 8V20l-5-2.5V12L3 4z"/></svg></div><p>No open deals</p></div>`}
     </div>
   </div>`
 }
@@ -805,7 +850,7 @@ function renderDashboard(){
 // ─── COMPANIES ────────────────────────────────────────────────────
 function renderCompanies(){
   const q=S.search.toLowerCase()
-  let cos=SEED_COMPANIES.filter(c=>{
+  let cos=S.companies.filter(c=>{
     if(q&&!c.name.toLowerCase().includes(q)&&!c.sector.toLowerCase().includes(q)) return false
     if(S.filterSector&&c.sector!==S.filterSector) return false
     if(S.filterStage&&c.stage!==S.filterStage) return false
@@ -816,7 +861,10 @@ function renderCompanies(){
   return `
   <div class="page-header">
     <h2>Companies <span style="color:var(--t3);font-size:14px;font-weight:400">${cos.length}</span></h2>
-    <button class="btn-primary" onclick="openModal('deal')">+ Add Deal</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="openModal('company')">+ Add Company</button>
+      <button class="btn-primary" onclick="openModal('deal')">+ Add Deal</button>
+    </div>
   </div>
   <div class="filter-row">
     <input placeholder="Search companies…" value="${S.search}" oninput="S.search=this.value;renderContent()">
@@ -868,7 +916,7 @@ function renderCompanyDetail(){
         ${x.outcome?`<div class="tl-outcome">→ ${x.outcome}</div>`:''}
       </div>
     </div>`
-  }).join('')}</div>`:`<div class="empty"><div class="ei">⊙</div><p>No interactions visible for your division</p></div>`
+  }).join('')}</div>`:`<div class="empty"><div class="ei"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15c0 1.105-.895 2-2 2H6l-4 4V4c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v11z"/></svg></div><p>No interactions visible for your division</p></div>`
 
   const dealsHtml=cdx.length?`<table><thead><tr><th>Type</th><th>Division</th><th>Status</th><th>Value</th><th>Engaged</th><th>Closed</th></tr></thead><tbody>
     ${cdx.map(d=>`<tr>
@@ -879,13 +927,16 @@ function renderCompanyDetail(){
       <td style="color:var(--t2)">${fmtDate(d.dateEngaged)}</td>
       <td style="color:var(--t2)">${fmtDate(d.dateClosed)}</td>
     </tr>`).join('')}
-  </tbody></table>`:`<div class="empty"><div class="ei">⊟</div><p>No deals visible for your division</p></div>`
+  </tbody></table>`:`<div class="empty"><div class="ei"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-6.5 8V20l-5-2.5V12L3 4z"/></svg></div><p>No deals visible for your division</p></div>`
 
-  const contactsHtml=`<table><thead><tr><th>Name</th><th>Title</th><th>Conferences</th></tr></thead><tbody>
+  const contactsHtml=`<table><thead><tr><th>Name</th><th>Title</th><th>Email</th><th>City</th><th>State</th><th>LinkedIn</th></tr></thead><tbody>
     ${ccts.map(c=>`<tr>
       <td style="font-weight:600">${c.name}</td>
       <td style="color:var(--t2)">${c.title}</td>
-      <td style="color:var(--t3);font-size:12px">${(c.events||[]).join(', ')||'—'}</td>
+      <td style="color:var(--t2);font-size:13px">${c.email||'—'}</td>
+      <td style="color:var(--t2)">${c.city||'—'}</td>
+      <td style="color:var(--t2)">${c.state||'—'}</td>
+      <td style="font-size:13px">${c.linkedin?`<a href="https://${c.linkedin}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">↗ LinkedIn</a>`:'—'}</td>
     </tr>`).join('')}
   </tbody></table>`
 
@@ -926,15 +977,17 @@ function renderContacts(){
   <div class="page-header"><h2>Contacts <span style="color:var(--t3);font-size:14px;font-weight:400">${cts.length}</span></h2></div>
   <div class="filter-row"><input placeholder="Search contacts or company…" value="${S.search}" oninput="S.search=this.value;renderContent()"></div>
   <div class="card" style="padding:0"><div class="tbl-wrap"><table>
-    <thead><tr><th>Name</th><th>Title</th><th>Company</th><th>Stage</th><th>Conferences</th></tr></thead>
+    <thead><tr><th>Name</th><th>Title</th><th>Company</th><th>Email</th><th>City</th><th>State</th><th>LinkedIn</th></tr></thead>
     <tbody>${cts.map(c=>{
       const co=getCompany(c.companyId)
       return `<tr class="clickable" onclick="navigate('company-detail',{companyId:'${c.companyId}',companyTab:'contacts'})">
         <td style="font-weight:600">${c.name}</td>
         <td style="color:var(--t2)">${c.title}</td>
         <td style="color:var(--accent)">${c.company}</td>
-        <td>${co?stageBadge(co.stage):''}</td>
-        <td style="color:var(--t3);font-size:12px">${(c.events||[]).join(', ')||'—'}</td>
+        <td style="color:var(--t2);font-size:13px">${c.email||'—'}</td>
+        <td style="color:var(--t2)">${c.city||'—'}</td>
+        <td style="color:var(--t2)">${c.state||'—'}</td>
+        <td style="font-size:13px">${c.linkedin?`<a href="https://${c.linkedin}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);text-decoration:none">↗ LinkedIn</a>`:'—'}</td>
       </tr>`}).join('')}
     </tbody>
   </table></div></div>`
@@ -1062,7 +1115,7 @@ function renderAnalytics(){
   return `
   <div class="page-header"><h2>Analytics</h2></div>
   <div class="stats-row">
-    <div class="stat-card"><div class="sv">${SEED_COMPANIES.length}</div><div class="sl">Companies Tracked</div></div>
+    <div class="stat-card"><div class="sv">${S.companies.length}</div><div class="sl">Companies Tracked</div></div>
     <div class="stat-card"><div class="sv">${S.interactions.length}</div><div class="sl">Total Interactions</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--accent)">${fmt$(S.deals.filter(d=>d.status==='Closed Won').reduce((s,d)=>s+d.value,0))}</div><div class="sl">Closed Deal Value</div></div>
     <div class="stat-card"><div class="sv">${S.deals.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div><div class="sl">Open Deals</div></div>
@@ -1082,7 +1135,7 @@ function initCharts(){
     scales:{x:{ticks:{color:'#556860'},grid:{color:'#1e2b21'}},y:{ticks:{color:'#556860'},grid:{color:'#1e2b21'}}}
   }
   // Funnel
-  const statusCounts=STATUS_ORDER.map(s=>SEED_COMPANIES.filter(c=>c.status===s).length)
+  const statusCounts=STATUS_ORDER.map(s=>S.companies.filter(c=>c.status===s).length)
   new Chart(document.getElementById('ch-funnel'),{type:'bar',data:{labels:STATUS_ORDER,datasets:[{data:statusCounts,backgroundColor:['#8fa89230','#4fc3f730','#ffc10730','#00e67630','#ff475730'],borderColor:['#8fa892','#4fc3f7','#ffc107','#00e676','#ff4757'],borderWidth:1}]},options:{...CHART_DEFAULTS,plugins:{legend:{display:false}}}})
   // By division
   const divCounts=DIVISIONS.map(d=>S.interactions.filter(x=>x.division===d).length)
@@ -1092,17 +1145,29 @@ function initCharts(){
   const dealVals=dealTypes.map(t=>S.deals.filter(d=>d.type.startsWith(t)&&d.status==='Closed Won').reduce((s,d)=>s+d.value,0))
   new Chart(document.getElementById('ch-type'),{type:'bar',data:{labels:dealTypes,datasets:[{data:dealVals.map(v=>v/1e6),backgroundColor:'#00e67625',borderColor:'#00e676',borderWidth:1,label:'$M Closed'}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{legend:{display:false}}}})
   // Sector breakdown
-  const sectors=[...new Set(SEED_COMPANIES.map(c=>c.sector))]
-  const sectCounts=sectors.map(s=>SEED_COMPANIES.filter(c=>c.sector===s).length)
+  const sectors=[...new Set(S.companies.map(c=>c.sector))]
+  const sectCounts=sectors.map(s=>S.companies.filter(c=>c.sector===s).length)
   const colors=['#ff6d00','#4fc3f7','#ab47bc','#7c4dff','#00bcd4','#ffca28','#ff7043','#00e676','#f06292','#aed581','#4db6ac','#ffd54f']
   new Chart(document.getElementById('ch-sector'),{type:'doughnut',data:{labels:sectors,datasets:[{data:sectCounts,backgroundColor:colors.map(c=>c+'33'),borderColor:colors,borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8fa892',font:{size:10}}}}}})
 }
 
 // ─── MODALS ───────────────────────────────────────────────────────
 function openModal(type){
+  if(type==='company'){
+    document.getElementById('co-name').value=''
+    document.getElementById('co-sector').value=''
+    document.getElementById('co-stage').value=''
+    document.getElementById('co-status').value='Prospect'
+    document.getElementById('co-hq').value=''
+    document.getElementById('co-founded').value=''
+    document.getElementById('co-employees').value=''
+    document.getElementById('co-desc').value=''
+    document.getElementById('modal-company').classList.add('open')
+    return
+  }
   if(type==='interaction'){
     const sel=document.getElementById('m-company')
-    sel.innerHTML='<option value="">Select company…</option>'+SEED_COMPANIES.map(c=>`<option value="${c.id}" ${S.companyId===c.id?'selected':''}>${c.name}</option>`).join('')
+    sel.innerHTML='<option value="">Select company…</option>'+S.companies.map(c=>`<option value="${c.id}" ${S.companyId===c.id?'selected':''}>${c.name}</option>`).join('')
     if(S.companyId) populateContacts()
     const dw=document.getElementById('m-div-wrap')
     const ds=document.getElementById('m-division')
@@ -1115,7 +1180,7 @@ function openModal(type){
     document.getElementById('m-date').value=new Date().toISOString().split('T')[0]
   } else {
     const sel=document.getElementById('d-company')
-    sel.innerHTML='<option value="">Select company…</option>'+SEED_COMPANIES.map(c=>`<option value="${c.id}" ${S.companyId===c.id?'selected':''}>${c.name}</option>`).join('')
+    sel.innerHTML='<option value="">Select company…</option>'+S.companies.map(c=>`<option value="${c.id}" ${S.companyId===c.id?'selected':''}>${c.name}</option>`).join('')
     const dw=document.getElementById('d-div-wrap')
     const ds=document.getElementById('d-division')
     if(S.role==='Admin'){
@@ -1171,11 +1236,29 @@ function saveDeal(){
   else navigate(S.view)
 }
 
+function saveCompany(){
+  const name=document.getElementById('co-name').value.trim()
+  const sector=document.getElementById('co-sector').value
+  const stage=document.getElementById('co-stage').value
+  if(!name||!sector||!stage){alert('Please fill in Name, Sector and Stage.');return}
+  const id='c'+Date.now()
+  S.companies.push({
+    id,name,sector,stage,
+    status:document.getElementById('co-status').value,
+    hq:document.getElementById('co-hq').value,
+    founded:parseInt(document.getElementById('co-founded').value)||null,
+    employees:document.getElementById('co-employees').value,
+    description:document.getElementById('co-desc').value
+  })
+  persist()
+  closeModal('company')
+  navigate('companies')
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────
 document.querySelectorAll('.role-card').forEach(c=>{
   c.addEventListener('click',()=>selectRole(c.dataset.role))
 })
-document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitPin()})
 document.querySelectorAll('.modal-overlay').forEach(m=>{
   m.addEventListener('click',e=>{if(e.target===m){const id=m.id.replace('modal-','');closeModal(id)}})
 })

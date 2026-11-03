@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Deal Flow CRM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -289,6 +289,217 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 #content::-webkit-scrollbar{width:5px}
 #content::-webkit-scrollbar-track{background:transparent}
 #content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* Layout helpers — same geometry the views previously inlined, so desktop is unchanged. */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.pipe-stats{display:flex;gap:12px;margin-bottom:20px}
+.pipe-stat{flex:1;padding:14px}
+.co-actions{display:flex;gap:8px}
+.contacts-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ix-toolbar{display:flex;gap:8px;align-items:center}
+.ix-search{width:280px}
+.journey-track{display:flex;align-items:flex-start;gap:0;position:relative}
+.journey-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0}
+.journey-line{position:absolute;top:11px;left:50%;right:-50%;height:2px;z-index:0}
+.journey-dot{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;z-index:1;flex-shrink:0}
+.journey-pending{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2)}
+.journey-copy{margin-top:8px;text-align:center;padding:0 4px}
+.conf-row{display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:var(--s1);border-radius:6px}
+.conf-date{font-size:10px;color:var(--t3);white-space:nowrap;margin-top:1px;font-variant-numeric:tabular-nums}
+.conf-main{flex:1;min-width:0}
+.conf-div{font-size:10px;font-weight:600;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.deal-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;background:var(--s1);border-radius:6px}
+.deal-row-main{flex:1;min-width:0}
+.ec-badges{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start}
+.ev-next-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.td-nowrap,.nowrap{white-space:nowrap}
+.td-clip{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-clip-sm{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.modal.modal-lg{max-width:640px;width:95vw}
+.nav-toggle,.nav-close,.nav-backdrop{display:none}
+
+/* Phone + large-phone landscape. Desktop (wider than 980px) is untouched. */
+@media (max-width:980px){
+  html,body{overflow-x:clip;max-width:100%;-webkit-text-size-adjust:100%}
+  body{min-height:100dvh;color-scheme:dark}
+  #login{
+    flex-direction:column;justify-content:flex-start;align-items:stretch;
+    min-height:100dvh;overflow-y:auto;
+    padding:calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+  }
+  .login-wrap{margin-top:auto;margin-bottom:auto;width:100%;max-width:660px;align-self:center}
+  .login-logo{margin-bottom:22px}
+  .role-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .role-card{min-height:92px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .role-card .label{font-size:13px;line-height:1.3}
+  .role-card .sub{font-size:11px}
+  .role-card:hover,.btn-primary:hover,.sb-log-btn:hover,.deal-card:hover{transform:none}
+
+  #app{height:100dvh;max-width:100%}
+  #main{position:relative;z-index:1;margin-left:0;width:100%;max-width:100%;height:100dvh;min-width:0}
+  #sidebar{
+    transform:translateX(-105%);visibility:hidden;z-index:400;
+    width:min(320px,88vw);min-width:0;height:100dvh;
+    padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);
+    transition:transform .2s ease,visibility .2s;
+  }
+  #sidebar.open{transform:none;visibility:visible;box-shadow:12px 0 40px rgba(0,0,0,.5)}
+  .nav-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:350}
+  .nav-backdrop.open{display:block}
+  .sb-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .sb-brand{min-width:0}
+  .nav-close{
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:44px;height:44px;margin:-8px -6px 0 0;padding:0;
+    background:transparent;color:var(--t2);font-size:28px;line-height:1;border-radius:12px;
+  }
+  .sb-footer{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .sb-log-btn,.sb-logout,.nav-item{min-height:44px}
+  .nav-item{padding:10px 12px}
+
+  .nav-toggle{
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:44px;height:44px;padding:0;border-radius:12px;
+    background:transparent;color:var(--text);
+  }
+  #topbar{
+    height:auto;min-height:calc(52px + env(safe-area-inset-top));
+    padding:env(safe-area-inset-top) calc(10px + env(safe-area-inset-right)) 0 calc(4px + env(safe-area-inset-left));
+    gap:4px;
+  }
+  .tb-left{min-width:0;flex:1;gap:2px}
+  .tb-right{min-width:0;flex-shrink:1}
+  .tb-breadcrumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #tb-role-badge{max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #content{
+    min-width:0;overflow-x:clip;
+    padding:16px calc(14px + env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
+    scroll-padding-bottom:24px;
+  }
+  body.nav-open{overflow:hidden}
+
+  .stats-row,.ev-stats-row,.kpi-row{grid-template-columns:1fr 1fr}
+  .stats-row>*,.ev-stats-row>*,.kpi-row>*,.dash-grid>*,.split-grid>*,.charts-grid>*{min-width:0}
+  .dash-grid,.split-grid,.charts-grid{grid-template-columns:1fr}
+  .pipe-stats{display:grid;grid-template-columns:1fr 1fr}
+  .pipe-stat{min-width:0}
+  .pipeline-board{grid-template-columns:1fr}
+  .p-col{min-width:0}
+  .p-col:not(:has(.deal-card)) .p-col-header{margin-bottom:0}
+
+  .page-header{flex-wrap:wrap;gap:10px;align-items:center}
+  .page-header h2{min-width:0}
+  .ix-toolbar{flex:1 1 220px;min-width:0;flex-wrap:wrap}
+  .ix-search{width:auto;flex:1 1 160px;min-width:0}
+  .co-top{flex-wrap:wrap;gap:10px}
+  .co-name{font-size:22px;line-height:1.15;overflow-wrap:anywhere}
+  .co-actions{flex-wrap:wrap}
+  .contacts-bar{flex-wrap:wrap;gap:8px}
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tab{flex:1 0 auto;min-height:44px;padding:10px 8px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .filter-row input,.filter-row select{min-width:0;flex:1 1 140px;width:auto}
+  .intro-summary{display:grid;grid-template-columns:1fr 1fr}
+  .cat-toggle{width:100%;max-width:100%}
+  .cat-btn{flex:1;min-height:44px}
+  .div-chip,.ev-region-btn,.ev-type-chip,.interest-chip{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .div-chip{min-width:44px;padding:8px 14px}
+  .ev-region-tabs{flex-wrap:wrap;max-width:100%;border-radius:14px}
+  .ev-type-chips{flex-wrap:wrap}
+  .ev-filters-bar{align-items:stretch}
+  .ec-top{flex-wrap:wrap}
+  .ec-badges{flex-shrink:1;justify-content:flex-start}
+  .ec-name{overflow-wrap:anywhere}
+  .ev-next-name{white-space:normal}
+  .event-card .badge{min-height:44px;padding:8px 12px;display:inline-flex;align-items:center}
+  .ec-tracked-pill,.ec-company-pill,.ec-untracked-pill{min-height:36px;padding:6px 12px}
+  .conf-row,.deal-row{flex-wrap:wrap;align-items:flex-start}
+  .conf-div,.deal-row .nowrap{white-space:normal}
+  .journey-copy,.dc-type,.dc-company,.tl-notes{overflow-wrap:anywhere}
+  .card,.co-header,.event-card,.chart-card,.stat-card,.ev-stat{max-width:100%;min-width:0}
+  .stat-card{padding:14px}
+  .stat-card .sv{font-size:24px;overflow-wrap:anywhere}
+  .chart-wrap{height:240px}
+  .chart-wrap canvas{max-width:100%}
+
+  .btn-primary,.btn-ghost,.btn-danger,.co-actions .btn-primary,.co-actions .btn-ghost,.contacts-bar .btn-ghost,.ix-toolbar .btn-primary,.card-header .btn-ghost{
+    min-height:44px;
+  }
+  a,button,.nav-item,.role-card,.tab,.deal-card,.stat-card,tr.clickable,.div-chip,.ec-tracked-pill,.badge{touch-action:manipulation}
+  input,select,textarea{font-size:16px;min-height:44px}
+  textarea{min-height:88px}
+  #content,.modal-body{overflow-wrap:break-word}
+
+  .tbl-wrap{overflow:visible}
+  .tbl-wrap table,.tbl-wrap tbody{display:block;width:100%}
+  .tbl-wrap thead{display:none}
+  .tbl-wrap tr{display:flex;flex-direction:column;padding:12px 14px;border-bottom:1px solid var(--border)}
+  .tbl-wrap tr:last-child{border-bottom:none}
+  .tbl-wrap td{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+    padding:5px 0;border:none;text-align:right;min-width:0;
+    white-space:normal;max-width:none;overflow:visible;text-overflow:unset;
+  }
+  .tbl-wrap td::before{
+    content:attr(data-label);color:var(--t3);font-size:10px;font-weight:700;
+    letter-spacing:.6px;text-transform:uppercase;text-align:left;flex:0 0 auto;padding-top:3px;
+  }
+  .tbl-wrap td.td-main{display:block;order:-1;text-align:left;padding:0 0 6px;font-size:15px}
+  .tbl-wrap td.td-main::before{content:none}
+  .tbl-wrap td.td-stack{flex-direction:column;align-items:stretch;text-align:left;gap:3px}
+  .tbl-wrap td[colspan]{display:block;text-align:center}
+  .tbl-wrap td[colspan]::before{content:none}
+  tr.clickable:active td{background:rgba(255,255,255,.04)}
+
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-overlay.open{
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .modal,.modal.modal-lg{
+    width:100%;max-width:100%;max-height:100%;
+    border-radius:18px 18px 0 0;
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .modal-header,.modal-footer{flex:0 0 auto}
+  .modal-header{padding:12px 8px 12px 16px}
+  .modal-body{flex:1 1 auto;overflow-y:auto;max-height:none !important;-webkit-overflow-scrolling:touch;padding:16px}
+  .modal-footer{padding:12px 16px calc(12px + env(safe-area-inset-bottom));flex-wrap:wrap}
+  .modal-footer button{flex:1 1 120px;min-height:44px}
+  .modal-close,.contact-row-remove{width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0}
+}
+@media (max-width:980px) and (min-width:700px){
+  .stats-row,.ev-stats-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .kpi-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dash-grid,.split-grid,.charts-grid{grid-template-columns:1fr 1fr}
+  .pipe-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .pipeline-board{grid-template-columns:1fr 1fr}
+  .chart-wrap{height:200px}
+  .intro-summary{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:699px){
+  .filter-row{flex-direction:column;align-items:stretch}
+  .filter-row input,.filter-row select{width:100%;flex:none}
+  .page-header:has(.ix-toolbar){flex-direction:column;align-items:stretch}
+  .ix-toolbar{flex-direction:column;align-items:stretch;width:100%;flex:none}
+  .ix-search{width:100%;flex:none}
+  .ix-toolbar .btn-primary{width:100%}
+  .form-row{grid-template-columns:1fr}
+  .journey-track{flex-direction:column;gap:14px}
+  .journey-step{flex-direction:row;align-items:flex-start;gap:12px;width:100%}
+  .journey-line{display:none}
+  .journey-copy{margin-top:0;text-align:left}
+  .ev-region-tabs,.ev-type-chips{width:100%}
+}
+@media (max-width:980px) and (max-height:520px){
+  #login{padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .login-logo{margin-bottom:12px}
+  .login-logo .kalshi-mark{font-size:22px}
+  .role-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .role-card{min-height:68px;padding:10px 8px}
+  .chart-wrap{height:170px}
+  #content{padding-top:12px}
+}
 </style>
 </head>
 <body>
@@ -315,10 +526,14 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 
 <!-- APP -->
 <div id="app">
+  <div class="nav-backdrop" id="nav-backdrop" onclick="closeNav()"></div>
   <div id="sidebar">
     <div class="sb-header">
-      <div class="app-name">Deal Flow CRM</div>
-      <div class="app-sub">Internal Coverage Tool</div>
+      <div class="sb-brand">
+        <div class="app-name">Deal Flow CRM</div>
+        <div class="app-sub">Internal Coverage Tool</div>
+      </div>
+      <button type="button" class="nav-close" onclick="closeNav()" aria-label="Close menu">×</button>
     </div>
     <div class="sb-role">
       <div class="role-name" id="sb-role-name">—</div>
@@ -332,7 +547,12 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
   </div>
   <div id="main">
     <div id="topbar">
-      <div class="tb-left"><div class="tb-breadcrumb" id="tb-breadcrumb"></div></div>
+      <div class="tb-left">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="toggleNav()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+        </button>
+        <div class="tb-breadcrumb" id="tb-breadcrumb"></div>
+      </div>
       <div class="tb-right"><div class="tb-role-badge" id="tb-role-badge"></div></div>
     </div>
     <div id="content"></div>
@@ -366,7 +586,7 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 
 <!-- MODAL: COMPANY -->
 <div class="modal-overlay" id="modal-company">
-  <div class="modal" style="max-width:640px;width:95vw">
+  <div class="modal modal-lg">
     <div class="modal-header">
       <h3>Add Company</h3>
       <button class="modal-close" onclick="closeModal('company')">×</button>
@@ -840,7 +1060,54 @@ function statusBadge(s){
 function stageBadge(s){return `<span class="badge ${s==='Series D'?'badge-sd':'badge-sc'}">${s}</span>`}
 
 // ─── NAVIGATION ───────────────────────────────────────────────────
+function toggleNav(){
+  const sb=document.getElementById('sidebar')
+  const open=!sb.classList.contains('open')
+  sb.classList.toggle('open', open)
+  document.getElementById('nav-backdrop').classList.toggle('open', open)
+  document.body.classList.toggle('nav-open', open)
+  const btn=document.getElementById('nav-toggle')
+  if(btn){
+    btn.setAttribute('aria-expanded', open?'true':'false')
+    btn.setAttribute('aria-label', open?'Close menu':'Open menu')
+  }
+}
+function closeNav(){
+  const sb=document.getElementById('sidebar')
+  if(!sb) return
+  sb.classList.remove('open')
+  const bd=document.getElementById('nav-backdrop')
+  if(bd) bd.classList.remove('open')
+  document.body.classList.remove('nav-open')
+  const btn=document.getElementById('nav-toggle')
+  if(btn){
+    btn.setAttribute('aria-expanded','false')
+    btn.setAttribute('aria-label','Open menu')
+  }
+}
+function fitModals(){
+  const mobile=window.matchMedia('(max-width: 980px)').matches
+  const vv=window.visualViewport
+  document.querySelectorAll('.modal-overlay').forEach(m=>{
+    if(!mobile||!m.classList.contains('open')||!vv){
+      m.style.top=''
+      m.style.height=''
+      m.style.bottom=''
+      return
+    }
+    m.style.top=Math.round(vv.offsetTop)+'px'
+    m.style.height=Math.round(vv.height)+'px'
+    m.style.bottom='auto'
+  })
+}
+function bindVisualViewport(){
+  if(!window.visualViewport) return
+  const sync=()=>fitModals()
+  window.visualViewport.addEventListener('resize', sync)
+  window.visualViewport.addEventListener('scroll', sync)
+}
 function navigate(view,params={}){
+  closeNav()
   if(S.view==='interactions'&&view!=='interactions'){S.filterDivision='';S.filterCategory='all';S.search=''}
   if(S.view==='events'&&view!=='events'){S.filterRegion='all';S.filterEventType='all'}
   S.view=view; Object.assign(S,params)
@@ -924,7 +1191,7 @@ function renderDashboard(){
     <div class="stat-card"><div class="sv">${activeDx.length}</div><div class="sl">Open Deals</div><div class="sd">${S.role==='Admin'?'All divisions':'Your pipeline'}</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--accent)">${fmt$(totalValue)}</div><div class="sl">Closed Deal Value</div><div class="sd">${closedDeals.length} deals closed</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+  <div class="dash-grid">
     <div class="card">
       <div class="card-header"><h3>Recent Interactions</h3><button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="navigate('interactions')">View all</button></div>
       ${recent.length?`<div class="timeline">${recent.map(x=>{
@@ -944,14 +1211,14 @@ function renderDashboard(){
     </div>
     <div class="card">
       <div class="card-header"><h3>Open Pipeline</h3><button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="navigate('pipeline')">View all</button></div>
-      ${activeDx.length?`<table><thead><tr><th>Company</th><th>Type</th><th>Status</th><th>Value</th></tr></thead><tbody>
+      ${activeDx.length?`<div class="tbl-wrap"><table><thead><tr><th>Company</th><th>Type</th><th>Status</th><th>Value</th></tr></thead><tbody>
         ${activeDx.slice(0,8).map(d=>{const co=getCompany(d.companyId); return `<tr class="clickable" onclick="navigate('company-detail',{companyId:'${d.companyId}',companyTab:'deals'})">
-          <td style="font-weight:600">${co?co.name:''}</td>
-          <td style="color:var(--t2);font-size:12px">${d.type.split('—')[0].trim()}</td>
-          <td>${statusBadge(d.status)}</td>
-          <td style="color:var(--accent);font-weight:600">${fmt$(d.value)}</td>
+          <td class="td-main" data-label="Company" style="font-weight:600">${co?co.name:''}</td>
+          <td data-label="Type" style="color:var(--t2);font-size:12px">${d.type.split('—')[0].trim()}</td>
+          <td data-label="Status">${statusBadge(d.status)}</td>
+          <td data-label="Value" style="color:var(--accent);font-weight:600">${fmt$(d.value)}</td>
         </tr>`}).join('')}
-      </tbody></table>`:`<div class="empty"><div class="ei">⊟</div><p>No open deals</p></div>`}
+      </tbody></table></div>`:`<div class="empty"><div class="ei">⊟</div><p>No open deals</p></div>`}
     </div>
   </div>`
 }
@@ -985,13 +1252,13 @@ function renderCompanies(){
         const cix=visibleInteractions(c.id).length
         const cdx=visibleDeals(c.id).length
         return `<tr class="clickable" onclick="navigate('company-detail',{companyId:'${c.id}',companyTab:'overview'})">
-          <td><div style="font-weight:600">${c.name}</div><div style="font-size:11px;color:var(--t3)">${c.description}</div></td>
-          <td style="color:var(--t2)">${c.sector}</td>
-          <td>${stageBadge(c.stage)}</td>
-          <td>${statusBadge(c.status)}</td>
-          <td style="color:var(--t2)">${c.hq}</td>
-          <td style="color:${cix?'var(--text)':'var(--t3)'}">${cix||'—'}</td>
-          <td style="color:${cdx?'var(--accent)':'var(--t3)'};font-weight:${cdx?700:400}">${cdx||'—'}</td>
+          <td class="td-main" data-label="Company"><div style="font-weight:600">${c.name}</div><div style="font-size:11px;color:var(--t3)">${c.description}</div></td>
+          <td data-label="Sector" style="color:var(--t2)">${c.sector}</td>
+          <td data-label="Stage">${stageBadge(c.stage)}</td>
+          <td data-label="Status">${statusBadge(c.status)}</td>
+          <td data-label="HQ" style="color:var(--t2)">${c.hq}</td>
+          <td data-label="Interactions" style="color:${cix?'var(--text)':'var(--t3)'}">${cix||'—'}</td>
+          <td data-label="Deals" style="color:${cdx?'var(--accent)':'var(--t3)'};font-weight:${cdx?700:400}">${cdx||'—'}</td>
         </tr>`}).join('')}
       </tbody>
     </table></div>
@@ -1024,33 +1291,33 @@ function renderCompanyDetail(){
     </div>`
   }).join('')}</div>`:`<div class="empty"><div class="ei">⊙</div><p>No interactions visible for your division</p></div>`
 
-  const dealsHtml=cdx.length?`<table><thead><tr><th>Type</th><th>Division</th><th>Status</th><th>Value</th><th>Engaged</th><th>Closed</th></tr></thead><tbody>
+  const dealsHtml=cdx.length?`<div class="tbl-wrap"><table><thead><tr><th>Type</th><th>Division</th><th>Status</th><th>Value</th><th>Engaged</th><th>Closed</th></tr></thead><tbody>
     ${cdx.map(d=>`<tr>
-      <td style="font-weight:500">${d.type}</td>
-      <td><span class="${divClass(d.division)}" style="font-size:12px">${d.division}</span></td>
-      <td>${statusBadge(d.status)}</td>
-      <td style="color:var(--accent);font-weight:600">${fmt$(d.value)}</td>
-      <td style="color:var(--t2)">${fmtDate(d.dateEngaged)}</td>
-      <td style="color:var(--t2)">${fmtDate(d.dateClosed)}</td>
+      <td class="td-main" data-label="Type" style="font-weight:500">${d.type}</td>
+      <td data-label="Division"><span class="${divClass(d.division)}" style="font-size:12px">${d.division}</span></td>
+      <td data-label="Status">${statusBadge(d.status)}</td>
+      <td data-label="Value" style="color:var(--accent);font-weight:600">${fmt$(d.value)}</td>
+      <td data-label="Engaged" style="color:var(--t2)">${fmtDate(d.dateEngaged)}</td>
+      <td data-label="Closed" style="color:var(--t2)">${fmtDate(d.dateClosed)}</td>
     </tr>`).join('')}
-  </tbody></table>`:`<div class="empty"><div class="ei">⊟</div><p>No deals visible for your division</p></div>`
+  </tbody></table></div>`:`<div class="empty"><div class="ei">⊟</div><p>No deals visible for your division</p></div>`
 
   const interestColors={'Equity Research Coverage':'#4fc3f7','Fundraising Advisory':'#00e676','M&A Advisory — Sell-Side':'#ff6d00','M&A Advisory — Buy-Side':'#ffca28','IPO / Capital Markets':'#ab47bc','Debt / Credit Facility':'#ff7043','Wealth Management Advisory':'#7c4dff','Direct Investment':'#00bcd4'}
   const interestBadges=(co.interests&&co.interests.length)?co.interests.map(i=>{const c=interestColors[i]||'#888';return `<span style="display:inline-flex;align-items:center;gap:5px;background:${c}18;border:1px solid ${c}44;color:${c};border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600">${i}</span>`}).join(''):`<span style="color:var(--t3);font-size:13px">No interests recorded</span>`
 
   const contactsHtml=`
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+  <div class="contacts-bar">
     <span style="font-size:13px;color:var(--t2)">${ccts.length} contact${ccts.length!==1?'s':''}</span>
     <button class="btn-ghost" style="font-size:12px" onclick="openAddContactModal('${co.id}')">+ Add Contact</button>
   </div>
   ${ccts.length?`<div class="card" style="padding:0"><div class="tbl-wrap"><table>
     <thead><tr><th>Name</th><th>Title</th><th>Email</th><th>LinkedIn</th><th>Location</th></tr></thead>
     <tbody>${ccts.map(c=>`<tr>
-      <td style="font-weight:600">${c.name}</td>
-      <td style="color:var(--t2)">${c.title}</td>
-      <td style="color:var(--t2)">${c.email?`<a href="mailto:${c.email}" style="color:var(--accent);text-decoration:none">${c.email}</a>`:'—'}</td>
-      <td>${c.linkedIn?`<a href="${c.linkedIn.startsWith('http')?c.linkedIn:'https://'+c.linkedIn}" target="_blank" style="color:var(--accent);text-decoration:none;font-size:12px">View ↗</a>`:'—'}</td>
-      <td style="color:var(--t2);font-size:12px">${c.location||'—'}</td>
+      <td class="td-main" data-label="Name" style="font-weight:600">${c.name}</td>
+      <td data-label="Title" style="color:var(--t2)">${c.title}</td>
+      <td data-label="Email" style="color:var(--t2)">${c.email?`<a href="mailto:${c.email}" style="color:var(--accent);text-decoration:none">${c.email}</a>`:'—'}</td>
+      <td data-label="LinkedIn">${c.linkedIn?`<a href="${c.linkedIn.startsWith('http')?c.linkedIn:'https://'+c.linkedIn}" target="_blank" style="color:var(--accent);text-decoration:none;font-size:12px">View ↗</a>`:'—'}</td>
+      <td data-label="Location" style="color:var(--t2);font-size:12px">${c.location||'—'}</td>
     </tr>`).join('')}
     </tbody></table></div></div>`
   :`<div class="empty"><div class="ei">⊙</div><p>No contacts yet — add the first one</p></div>`}`
@@ -1071,7 +1338,7 @@ function renderCompanyDetail(){
   const maxDiv=divsCovered.length?Math.max(...Object.values(divBreakdown)):1
 
   // ── KPI row ─────────────────────────────────────────────────────
-  const kpiRow=`<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+  const kpiRow=`<div class="kpi-row">
     <div class="card" style="padding:14px 16px">
       <div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.6px;margin-bottom:5px">INTERACTIONS</div>
       <div style="font-size:22px;font-weight:700">${cix.length}</div>
@@ -1108,14 +1375,14 @@ function renderCompanyDetail(){
   ]
   const journeyHtml=`<div class="card" style="margin-bottom:12px;padding:16px 20px">
     <div style="font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--t3);margin-bottom:14px">RELATIONSHIP JOURNEY</div>
-    <div style="display:flex;align-items:flex-start;gap:0;position:relative">
+    <div class="journey-track">
       ${journeySteps.map((s,i)=>`
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
-          ${i<3?`<div style="position:absolute;top:11px;left:50%;right:-50%;height:2px;background:${journeySteps[i+1].done?'var(--accent)':'rgba(255,255,255,0.1)'};z-index:0"></div>`:''}
-          <div style="width:22px;height:22px;border-radius:50%;border:2px solid ${s.done?'var(--accent)':'rgba(255,255,255,0.15)'};background:${s.done?'var(--accent)':'var(--s1)'};display:flex;align-items:center;justify-content:center;z-index:1;flex-shrink:0">
-            ${s.done?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2)"></div>'}
+        <div class="journey-step">
+          ${i<3?`<div class="journey-line" style="background:${journeySteps[i+1].done?'var(--accent)':'rgba(255,255,255,0.1)'}"></div>`:''}
+          <div class="journey-dot" style="border-color:${s.done?'var(--accent)':'rgba(255,255,255,0.15)'};background:${s.done?'var(--accent)':'var(--s1)'}">
+            ${s.done?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<div class="journey-pending"></div>'}
           </div>
-          <div style="margin-top:8px;text-align:center;padding:0 4px">
+          <div class="journey-copy">
             <div style="font-size:11px;font-weight:600;color:${s.done?'var(--text)':'var(--t3)'}">${s.label}</div>
             ${s.date?`<div style="font-size:10px;color:var(--accent);margin-top:2px">${s.date}</div>`:''}
             ${s.detail?`<div style="font-size:10px;color:var(--t3);margin-top:1px;line-height:1.3">${s.detail}</div>`:''}
@@ -1161,14 +1428,14 @@ function renderCompanyDetail(){
     <div style="display:flex;flex-direction:column;gap:8px">
       ${confIntros.map(x=>{
         const ct=getContact(x.contactId); const clr=DIV_COLOR[x.division]||'#888'
-        return `<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:var(--s1);border-radius:6px">
-          <div style="font-size:10px;color:var(--t3);white-space:nowrap;margin-top:1px;font-variant-numeric:tabular-nums">${fmtDate(x.date)}</div>
-          <div style="flex:1;min-width:0">
+        return `<div class="conf-row">
+          <div class="conf-date">${fmtDate(x.date)}</div>
+          <div class="conf-main">
             <div style="font-size:12px;font-weight:600;margin-bottom:2px">${x.notes||'Conference introduction'}</div>
             ${ct?`<div style="font-size:11px;color:var(--t2)">Met: ${ct.name} · ${ct.title}</div>`:''}
             ${x.outcome?`<div style="font-size:11px;color:var(--t3);margin-top:2px">→ ${x.outcome}</div>`:''}
           </div>
-          <span style="font-size:10px;font-weight:600;background:${clr}22;color:${clr};border-radius:4px;padding:2px 7px;white-space:nowrap">${x.division}</span>
+          <span class="conf-div" style="background:${clr}22;color:${clr}">${x.division}</span>
         </div>`}).join('')}
     </div>
   </div>`:''
@@ -1194,14 +1461,14 @@ function renderCompanyDetail(){
     <div style="display:flex;flex-direction:column;gap:6px">
       ${openDeals.map(d=>{
         const clr=DIV_COLOR[d.division]||'#888'
-        return `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;background:var(--s1);border-radius:6px">
-          <div style="flex:1;min-width:0">
+        return `<div class="deal-row">
+          <div class="deal-row-main">
             <div style="font-size:12px;font-weight:600">${d.type}</div>
             <div style="font-size:11px;color:var(--t3);margin-top:1px">Engaged ${fmtDate(d.dateEngaged)}</div>
           </div>
-          <span style="font-size:10px;font-weight:600;background:${clr}22;color:${clr};border-radius:4px;padding:2px 7px;white-space:nowrap">${d.division}</span>
+          <span class="nowrap" style="font-size:10px;font-weight:600;background:${clr}22;color:${clr};border-radius:4px;padding:2px 7px">${d.division}</span>
           ${statusBadge(d.status)}
-          ${d.value?`<span style="font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap">${fmt$(d.value)}</span>`:''}
+          ${d.value?`<span class="nowrap" style="font-size:12px;font-weight:700;color:var(--accent)">${fmt$(d.value)}</span>`:''}
         </div>`}).join('')}
     </div>
   </div>`:''
@@ -1220,7 +1487,7 @@ function renderCompanyDetail(){
   const overviewHtml=`
   ${kpiRow}
   ${journeyHtml}
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+  <div class="split-grid">
     ${divCoverageHtml}
     ${interactionTypesHtml}
   </div>
@@ -1240,7 +1507,7 @@ function renderCompanyDetail(){
   <div class="co-header">
     <div class="co-top">
       <div class="co-name">${co.name}</div>
-      <div style="display:flex;gap:8px">
+      <div class="co-actions">
         <button class="btn-ghost" style="font-size:12px" onclick="openModal('interaction')">+ Interaction</button>
         <button class="btn-primary" style="font-size:12px" onclick="openModal('deal')">+ Deal</button>
       </div>
@@ -1265,11 +1532,11 @@ function renderContacts(){
     <tbody>${cts.map(c=>{
       const co=getCompany(c.companyId)
       return `<tr class="clickable" onclick="navigate('company-detail',{companyId:'${c.companyId}',companyTab:'contacts'})">
-        <td style="font-weight:600">${c.name}</td>
-        <td style="color:var(--t2)">${c.title}</td>
-        <td style="color:var(--accent)">${c.company}</td>
-        <td>${co?stageBadge(co.stage):''}</td>
-        <td style="color:var(--t3);font-size:12px">${(c.events||[]).join(', ')||'—'}</td>
+        <td class="td-main" data-label="Name" style="font-weight:600">${c.name}</td>
+        <td data-label="Title" style="color:var(--t2)">${c.title}</td>
+        <td data-label="Company" style="color:var(--accent)">${c.company}</td>
+        <td data-label="Stage">${co?stageBadge(co.stage):''}</td>
+        <td class="td-stack" data-label="Conferences" style="color:var(--t3);font-size:12px">${(c.events||[]).join(', ')||'—'}</td>
       </tr>`}).join('')}
     </tbody>
   </table></div></div>`
@@ -1311,7 +1578,7 @@ function renderInteractions(){
     </div>`:''
   }).join('')}</div>`:'';
 
-  const searchHtml=`<input placeholder="Search company, contact or notes…" value="${S.search}" oninput="S.search=this.value;renderContent()" style="width:280px">`
+  const searchHtml=`<input class="ix-search" placeholder="Search company, contact or notes…" value="${S.search}" oninput="S.search=this.value;renderContent()">`
 
   const divChips=[{label:'All',value:''},...DIVISIONS.map(d=>({label:DIV_SHORT[d]||d,value:d,color:DIV_COLOR[d]}))].map(d=>`
     <div class="div-chip ${S.filterDivision===d.value?'active':''}" style="${d.color&&S.filterDivision===d.value?`background:${d.color}22;border-color:${d.color}66;color:${d.color}`:''}" onclick="S.filterDivision='${d.value}';renderContent()">${d.label}</div>`).join('')
@@ -1325,7 +1592,7 @@ function renderInteractions(){
   return `
   <div class="page-header">
     <h2>Interactions <span style="color:var(--t3);font-size:14px;font-weight:400">${ix.length}</span></h2>
-    <div style="display:flex;gap:8px;align-items:center">${searchHtml}<button class="btn-primary" onclick="openModal('interaction')">+ Log Interaction</button></div>
+    <div class="ix-toolbar">${searchHtml}<button class="btn-primary" onclick="openModal('interaction')">+ Log Interaction</button></div>
   </div>
   ${introSummaryHtml}
   <div class="div-chips">${divChips}</div>
@@ -1340,14 +1607,14 @@ function renderInteractions(){
         ?`<span class="rel-intro">● First Touch</span>`
         :`<span class="rel-ongoing">Touch ${touch} of ${total}</span>`
       return `<tr class="clickable" onclick="navigate('company-detail',{companyId:'${x.companyId}',companyTab:'timeline'})">
-        <td style="white-space:nowrap;color:var(--t2)">${fmtDate(x.date)}</td>
-        <td style="font-weight:600">${co?co.name:''}</td>
-        <td style="color:var(--t2);font-size:12px">${ct?ct.name:'—'}</td>
-        <td><span class="badge" style="background:${color}22;color:${color};font-size:11px">${DIV_SHORT[x.division]||x.division}</span></td>
-        <td>${relBadge}</td>
-        <td style="color:var(--t2);font-size:12px">${x.type}</td>
-        <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--t2);font-size:12px">${x.notes}</td>
-        <td style="color:var(--t3);font-size:12px;font-style:italic;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.outcome||'—'}</td>
+        <td class="td-nowrap" data-label="Date" style="color:var(--t2)">${fmtDate(x.date)}</td>
+        <td class="td-main" data-label="Company" style="font-weight:600">${co?co.name:''}</td>
+        <td data-label="Contact" style="color:var(--t2);font-size:12px">${ct?ct.name:'—'}</td>
+        <td data-label="Division"><span class="badge" style="background:${color}22;color:${color};font-size:11px">${DIV_SHORT[x.division]||x.division}</span></td>
+        <td data-label="Relationship">${relBadge}</td>
+        <td data-label="Type" style="color:var(--t2);font-size:12px">${x.type}</td>
+        <td class="td-clip td-stack" data-label="Notes" style="color:var(--t2);font-size:12px">${x.notes}</td>
+        <td class="td-clip-sm td-stack" data-label="Outcome" style="color:var(--t3);font-size:12px;font-style:italic">${x.outcome||'—'}</td>
       </tr>`}).join(''):`<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:40px">No interactions match the current filters</td></tr>`}
     </tbody>
   </table></div></div>`
@@ -1379,11 +1646,11 @@ function renderPipeline(){
     <h2>Deal Pipeline</h2>
     <button class="btn-primary" onclick="openModal('deal')">+ Add Deal</button>
   </div>
-  <div style="display:flex;gap:12px;margin-bottom:20px">
-    <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">OPEN DEALS</div><div style="font-size:20px;font-weight:700;margin-top:4px">${dx.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div></div>
-    <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">CLOSED WON</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${closed.length}</div></div>
-    <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">TOTAL CLOSED VALUE</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${fmt$(closed.reduce((s,d)=>s+d.value,0))}</div></div>
-    <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">CLOSED LOST</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--red)">${lost.length}</div></div>
+  <div class="pipe-stats">
+    <div class="card pipe-stat"><div style="font-size:11px;color:var(--t3)">OPEN DEALS</div><div style="font-size:20px;font-weight:700;margin-top:4px">${dx.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div></div>
+    <div class="card pipe-stat"><div style="font-size:11px;color:var(--t3)">CLOSED WON</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${closed.length}</div></div>
+    <div class="card pipe-stat"><div style="font-size:11px;color:var(--t3)">TOTAL CLOSED VALUE</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${fmt$(closed.reduce((s,d)=>s+d.value,0))}</div></div>
+    <div class="card pipe-stat"><div style="font-size:11px;color:var(--t3)">CLOSED LOST</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--red)">${lost.length}</div></div>
   </div>
   <div class="pipeline-board">${cols}</div>`
 }
@@ -1460,7 +1727,7 @@ function renderEvents(){
             ${isUpcoming?`<span>${daysUntil(e.date)}</span>`:`<span style="color:var(--t3)">${e.contactsMet} contacts met</span>`}
           </div>
         </div>
-        <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start">
+        <div class="ec-badges">
           ${typeBadge(e.type)}
           <span class="ec-region-badge">${flag} ${e.region||''}</span>
           <span class="badge ${isUpcoming?'badge-upcoming':'badge-past'}">${isUpcoming?'Upcoming':'Past'}</span>
@@ -1499,7 +1766,7 @@ function renderEvents(){
     <div class="ev-stat">
       <div class="ev-stat-val">${nextDays!==null?nextDays:'—'}</div>
       <div class="ev-stat-label">Days to Next Event</div>
-      <div class="ev-stat-sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${nextEv?nextEv.name:'None scheduled'}</div>
+      <div class="ev-stat-sub ev-next-name">${nextEv?nextEv.name:'None scheduled'}</div>
     </div>
     <div class="ev-stat">
       <div class="ev-stat-val">${totalContactsMet}</div>
@@ -1540,6 +1807,9 @@ function initCharts(){
   const TICK_COLOR='#5a6672'
   const LEGEND_OPTS={color:'#b0bec5',font:{size:11},padding:16,usePointStyle:true,pointStyleWidth:9}
   const AXIS_OPTS={ticks:{color:TICK_COLOR},grid:{color:GRID_COLOR},border:{color:'transparent'}}
+  const phone=window.matchMedia('(max-width: 700px)').matches
+  const PHONE_TICKS={...AXIS_OPTS.ticks,maxRotation:0,minRotation:0,autoSkip:false,font:{size:10}}
+  const X_AXIS=phone?{...AXIS_OPTS,ticks:PHONE_TICKS}:AXIS_OPTS
   const CHART_DEFAULTS={
     responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:LEGEND_OPTS}},
@@ -1548,7 +1818,7 @@ function initCharts(){
   // Funnel — solid status colors, click navigates to companies filtered by status
   const statusColors=['#6b7280','#3b82f6','#f59e0b','#00e676','#ef4444']
   const statusCounts=STATUS_ORDER.map(s=>SEED_COMPANIES.filter(c=>c.status===s).length)
-  new Chart(document.getElementById('ch-funnel'),{type:'bar',data:{labels:STATUS_ORDER,datasets:[{data:statusCounts,backgroundColor:statusColors,borderWidth:0,borderRadius:5,borderSkipped:false}]},options:{...CHART_DEFAULTS,onClick:(e,els)=>{if(els.length){navigate('companies',{filterStatus:STATUS_ORDER[els[0].index],filterSector:'',filterStage:'',search:''})}},plugins:{legend:{display:false}},scales:{x:{...AXIS_OPTS},y:{...AXIS_OPTS,beginAtZero:true}}}})
+  new Chart(document.getElementById('ch-funnel'),{type:'bar',data:{labels:phone?['Prospect','Engaged','Diligence','Client','Closed']:STATUS_ORDER,datasets:[{data:statusCounts,backgroundColor:statusColors,borderWidth:0,borderRadius:5,borderSkipped:false}]},options:{...CHART_DEFAULTS,onClick:(e,els)=>{if(els.length){navigate('companies',{filterStatus:STATUS_ORDER[els[0].index],filterSector:'',filterStage:'',search:''})}},plugins:{legend:{display:false}},scales:{x:X_AXIS,y:{...AXIS_OPTS,beginAtZero:true}}}})
   // By division — solid fills, thicker doughnut, click navigates to interactions filtered by division
   const divCounts=DIVISIONS.map(d=>S.interactions.filter(x=>x.division===d).length)
   const divColors=DIVISIONS.map(d=>DIV_COLOR[d]||'#888')
@@ -1567,6 +1837,7 @@ function initCharts(){
 
 // ─── MODALS ───────────────────────────────────────────────────────
 function openModal(type){
+  closeNav()
   if(type==='company'){
     document.getElementById('co-sector').innerHTML='<option value="">Select…</option>'+SECTORS.map(s=>`<option>${s}</option>`).join('')
     document.getElementById('co-name').value=''
@@ -1581,6 +1852,7 @@ function openModal(type){
     document.getElementById('co-contacts-list').innerHTML=''
     addContactRow()
     document.getElementById('modal-company').classList.add('open')
+    fitModals()
     return
   }
   if(type==='interaction'){
@@ -1610,8 +1882,12 @@ function openModal(type){
     document.getElementById('d-engaged').value=new Date().toISOString().split('T')[0]
   }
   document.getElementById('modal-'+type).classList.add('open')
+  fitModals()
 }
-function closeModal(type){document.getElementById('modal-'+type).classList.remove('open')}
+function closeModal(type){
+  document.getElementById('modal-'+type).classList.remove('open')
+  fitModals()
+}
 let _contactRowIdx=0
 function addContactRow(){
   const idx=_contactRowIdx++
@@ -1686,6 +1962,7 @@ function openAddContactModal(companyId){
   document.getElementById('ct-linkedin').value=''
   document.getElementById('ct-location').value=''
   document.getElementById('modal-contact').classList.add('open')
+  fitModals()
 }
 function saveContact(){
   const first=document.getElementById('ct-first').value.trim()
@@ -1753,9 +2030,17 @@ function saveDeal(){
 document.querySelectorAll('.role-card').forEach(c=>{
   c.addEventListener('click',()=>selectRole(c.dataset.role))
 })
-document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitPin()})
+const pinInput=document.getElementById('pin-input')
+if(pinInput) pinInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&typeof submitPin==='function') submitPin()})
 document.querySelectorAll('.modal-overlay').forEach(m=>{
   m.addEventListener('click',e=>{if(e.target===m){const id=m.id.replace('modal-','');closeModal(id)}})
+})
+bindVisualViewport()
+document.addEventListener('focusin',e=>{
+  const t=e.target
+  if(!t||!t.matches||!t.matches('input,select,textarea')) return
+  if(!window.matchMedia('(max-width: 980px)').matches) return
+  setTimeout(()=>{ try{ t.scrollIntoView({block:'center', inline:'nearest'}) }catch(err){} }, 280)
 })
 </script>
 </body>

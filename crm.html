@@ -242,6 +242,56 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
 #content::-webkit-scrollbar{width:5px}
 #content::-webkit-scrollbar-track{background:transparent}
 #content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+.nav-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);flex-shrink:0}
+.nav-toggle svg{display:block}
+#nav-backdrop{display:none}
+.split-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.pipe-summary{display:flex;gap:12px;margin-bottom:20px}
+.pipe-summary>.card{flex:1}
+.page-tools{display:flex;gap:8px;align-items:center}
+.co-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+@media (max-width:520px){
+  body{overflow-x:hidden}
+  .nav-toggle{display:flex}
+  #sidebar{width:min(280px,88vw);min-width:0;transform:translateX(-105%);transition:transform .2s ease;z-index:50}
+  body.nav-open #sidebar{transform:translateX(0);box-shadow:12px 0 32px rgba(0,0,0,.45)}
+  #nav-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40}
+  body.nav-open #nav-backdrop{display:block}
+  #main{margin-left:0;width:100%}
+  #topbar{height:auto;min-height:52px;padding:8px 12px;gap:8px}
+  #content{padding:14px}
+  .tb-left{min-width:0;gap:8px;flex:1}
+  .tb-breadcrumb{min-width:0;overflow:hidden}
+  .tb-role-badge{max-width:34vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #login{padding:16px;align-items:center}
+  .login-logo{margin:12px 0 24px}
+  .role-grid{grid-template-columns:1fr 1fr}
+  .role-card{padding:14px 8px}
+  .stats-row{grid-template-columns:1fr 1fr;gap:8px}
+  .stat-card{padding:14px}
+  .stat-card .sv{font-size:22px}
+  .split-2,.charts-grid,.form-row{grid-template-columns:1fr}
+  .kpi-row,.pipe-summary{display:grid;grid-template-columns:1fr 1fr}
+  .pipeline-board{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px}
+  .p-col{flex:0 0 78vw;min-width:200px}
+  .filter-row input,.filter-row select{width:100%;min-width:0;flex:1 1 100%}
+  .page-header{flex-direction:column;align-items:stretch;gap:10px}
+  .page-tools{flex-wrap:wrap}
+  .co-top{flex-direction:column;gap:12px}
+  .co-name{font-size:20px}
+  .co-header{padding:16px}
+  .co-meta{flex-wrap:wrap;gap:12px}
+  .tabs{overflow-x:auto}
+  .tab{white-space:nowrap;padding:10px 12px}
+  .card{padding:14px;overflow-x:auto}
+  .chart-wrap{height:220px}
+  .modal-overlay{padding:10px;align-items:flex-end}
+  .modal{max-height:92vh}
+  .ec-top{flex-direction:column}
+}
 </style>
 </head>
 <body>
@@ -283,9 +333,15 @@ tr.clickable:hover td{background:rgba(255,255,255,.03)}
       <button class="sb-logout" onclick="logout()">Sign out</button>
     </div>
   </div>
+  <div id="nav-backdrop" onclick="closeNav()"></div>
   <div id="main">
     <div id="topbar">
-      <div class="tb-left"><div class="tb-breadcrumb" id="tb-breadcrumb"></div></div>
+      <div class="tb-left">
+        <button class="nav-toggle" type="button" aria-label="Menu" onclick="toggleNav()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></svg>
+        </button>
+        <div class="tb-breadcrumb" id="tb-breadcrumb"></div>
+      </div>
       <div class="tb-right"><div class="tb-role-badge" id="tb-role-badge"></div></div>
     </div>
     <div id="content"></div>
@@ -702,10 +758,13 @@ function selectRole(role){
   navigate('dashboard')
 }
 function logout(){
+  closeNav()
   S.role=null; S.view='dashboard'
   document.getElementById('app').style.display='none'
   document.getElementById('login').style.display='flex'
 }
+function toggleNav(){document.body.classList.toggle('nav-open')}
+function closeNav(){document.body.classList.remove('nav-open')}
 
 // ─── DATA HELPERS ─────────────────────────────────────────────────
 function visibleInteractions(cId){
@@ -734,6 +793,7 @@ function stageBadge(s){return `<span class="badge ${s==='Series D'?'badge-sd':'b
 
 // ─── NAVIGATION ───────────────────────────────────────────────────
 function navigate(view,params={}){
+  closeNav()
   S.view=view; Object.assign(S,params)
   renderSidebar(); renderTopbar(); renderContent()
   window.scrollTo&&document.getElementById('content')&&(document.getElementById('content').scrollTop=0)
@@ -815,7 +875,7 @@ function renderDashboard(){
     <div class="stat-card"><div class="sv">${activeDx.length}</div><div class="sl">Open Deals</div><div class="sd">${S.role==='Admin'?'All divisions':'Your pipeline'}</div></div>
     <div class="stat-card"><div class="sv" style="color:var(--accent)">${fmt$(totalValue)}</div><div class="sl">Closed Deal Value</div><div class="sd">${closedDeals.length} deals closed</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+  <div class="split-2">
     <div class="card">
       <div class="card-header"><h3>Recent Interactions</h3><button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="navigate('interactions')">View all</button></div>
       ${recent.length?`<div class="timeline">${recent.map(x=>{
@@ -861,7 +921,7 @@ function renderCompanies(){
   return `
   <div class="page-header">
     <h2>Companies <span style="color:var(--t3);font-size:14px;font-weight:400">${cos.length}</span></h2>
-    <div style="display:flex;gap:8px">
+    <div class="page-tools">
       <button class="btn-ghost" onclick="openModal('company')">+ Add Company</button>
       <button class="btn-primary" onclick="openModal('deal')">+ Add Deal</button>
     </div>
@@ -941,7 +1001,7 @@ function renderCompanyDetail(){
   </tbody></table>`
 
   const overviewHtml=`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+  <div class="kpi-row">
     <div class="card"><div class="sl" style="font-size:11px;color:var(--t3);margin-bottom:6px">INTERACTIONS</div><div style="font-size:24px;font-weight:700">${cix.length}</div></div>
     <div class="card"><div class="sl" style="font-size:11px;color:var(--t3);margin-bottom:6px">DEALS</div><div style="font-size:24px;font-weight:700">${cdx.length}</div></div>
     <div class="card"><div class="sl" style="font-size:11px;color:var(--t3);margin-bottom:6px">CLOSED VALUE</div><div style="font-size:24px;font-weight:700;color:var(--accent)">${fmt$(totalClosed)}</div></div>
@@ -956,7 +1016,7 @@ function renderCompanyDetail(){
   <div class="co-header">
     <div class="co-top">
       <div class="co-name">${co.name}</div>
-      <div style="display:flex;gap:8px">
+      <div class="co-actions">
         <button class="btn-ghost" style="font-size:12px" onclick="openModal('interaction')">+ Interaction</button>
         <button class="btn-primary" style="font-size:12px" onclick="openModal('deal')">+ Deal</button>
       </div>
@@ -1045,7 +1105,7 @@ function renderPipeline(){
     <h2>Deal Pipeline</h2>
     <button class="btn-primary" onclick="openModal('deal')">+ Add Deal</button>
   </div>
-  <div style="display:flex;gap:12px;margin-bottom:20px">
+  <div class="pipe-summary">
     <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">OPEN DEALS</div><div style="font-size:20px;font-weight:700;margin-top:4px">${dx.filter(d=>!['Closed Won','Closed Lost'].includes(d.status)).length}</div></div>
     <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">CLOSED WON</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${closed.length}</div></div>
     <div class="card" style="flex:1;padding:14px"><div style="font-size:11px;color:var(--t3)">TOTAL CLOSED VALUE</div><div style="font-size:20px;font-weight:700;margin-top:4px;color:var(--accent)">${fmt$(closed.reduce((s,d)=>s+d.value,0))}</div></div>
@@ -1153,6 +1213,7 @@ function initCharts(){
 
 // ─── MODALS ───────────────────────────────────────────────────────
 function openModal(type){
+  closeNav()
   if(type==='company'){
     document.getElementById('co-name').value=''
     document.getElementById('co-sector').value=''
